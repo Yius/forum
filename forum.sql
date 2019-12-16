@@ -16,31 +16,31 @@ CREATE TABLE user(
 
 DROP TABLE IF EXISTS post;
 CREATE TABLE post(
-    id INT,
+    id INT AUTO_INCREMENT,
     title VARCHAR(50),
     content VARCHAR(200),
     uid VARCHAR(20),
     nickname VARCHAR(20),
-    avatar VARCHAR(200)
+    avatar VARCHAR(200),
     PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS talkinfo;
 CREATE TABLE talkinfo(
-    id INT,
+    id INT AUTO_INCREMENT,
     content VARCHAR(200),
     senderid VARCHAR(20),
     receiverid VARCHAR(20),
     receivername VARCHAR(20),
     sendtime BIGINT,
     senderavatar VARCHAR(200),
-    receiveravatar VARCHAR(200)
+    receiveravatar VARCHAR(200),
     PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS postreply;
 CREATE TABLE postreply(
-    id INT,
+    id INT AUTO_INCREMENT,
     uid VARCHAR(20),
     nickname VARCHAR(20),
     avatar VARCHAR(200),
@@ -53,7 +53,7 @@ CREATE TABLE postreply(
 
 DROP TABLE if EXISTS friend;
 CREATE TABLE friend(
-    id INT,
+    id INT AUTO_INCREMENT,
     oneid VARCHAR(20),
     twoid VARCHAR(20),
     onename VARCHAR(20),
