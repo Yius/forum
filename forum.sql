@@ -22,6 +22,7 @@ CREATE TABLE post(
     uid VARCHAR(20),
     nickname VARCHAR(20),
     avatar VARCHAR(200),
+    publishtime BIGINT,
     PRIMARY KEY(id)
 );
 
