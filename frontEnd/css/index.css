@@ -6,4 +6,51 @@
     -o-background-size: cover;
     -moz-background-size: cover;
     -ms-background-size: cover;
-   }
+}
+
+.welcome{
+	position: absolute;
+	top: 65%;
+    left: 50%;
+    margin: -150px 0 0 -200px;
+    width: 400px;
+    height: 300px;
+}
+.welcome h1{
+    color: #ffffff;
+    font-size: 350%;
+    text-shadow: 0 0 300px #000;
+}
+.button1{
+	border: 0;
+	background: none;
+	display: block;
+	margin: 20px auto;
+	text-align: center;
+	border: 2px solid #6495ED;
+	padding: 14px 40px;
+	outline: none;
+	color: white;
+	border-radius:24px;
+	transition: 0.25s;
+    cursor: pointer;
+    float: right;
+}
+.button2{
+	border: 0;
+	background: none;
+	display: block;
+	margin: 20px auto;
+	text-align: center;
+	border: 2px solid #6495ED;
+	padding: 14px 40px;
+	outline: none;
+	color: white;
+	border-radius:24px;
+	transition: 0.25s;
+    cursor: pointer;
+    float: left;
+}
+.button1:hover , .button2:hover{
+    background: #6495ED;
+}
