@@ -1,0 +1,9 @@
+.background {
+    background: url("../images/index_background.jpg") no-repeat center;
+    background-size: cover;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -ms-background-size: cover;
+   }
