@@ -105,22 +105,121 @@ server.get('/info/myinfo', function (req, res) {
 
 //获得帖子列表
 server.get('/posts/list', function (req, res) {
+    let output={
+        totalPage:{},
+        post:{
+            title:{},
+            id:{},
+            content:{},
+            publishtime:{}
+        }
+    }
+    let pageload=false  //totalpage是否完成查询
+    let postload=false  //post是否完成查询
     let info = URL.parse(req.url, true).query
     let page = info.page
     let pagesize = info.pagesize
-    let limit1 = (page - 1) * 20
-    let sql = 'select id,title from post limit '+limit1+','+pagesize
-    //let sql = "select id,title from post limit 20"
-    pool.query(sql,function (err, result) {
-        if (err) throw err
+    let limit1 = (page - 1) * pagesize
+
+    //查询总页数output.totalPage
+    let sql1='select count(id) num from post'
+    pool.query(sql1,function(err,result){
+        if(err) 
+            throw err
+        pageload=true
+        //获取总共页数totalPage
+        if(result[0].num%pagesize!=0)
+            output.totalPage=Math.ceil(result[0].num/pagesize)  //向上取整
+        else
+            output.totalPage=result[0].num/pagesize 
+        if(postload){
+            console.log(output)
+            res.json(output)
+        }
+    })
+
+    //查询帖子信息output.post
+    let sql2 = 'select id,title,content from post order by publishtime limit '+limit1+','+pagesize
+    pool.query(sql2,function (err, result) {
+        if (err) 
+            throw err
         if (result.length > 0) {
-            //JSON格式化处理
-            var dataString = JSON.stringify(result);
-            var data = JSON.parse(dataString);
-            res.json({data})
+            postload=true
+            if(pageload){
+                //JSON格式化处理
+                var dataString = JSON.stringify(result)
+                var data = JSON.parse(dataString)
+                output.post=data
+                console.log(output)
+                res.json(output)
+            }
         }
         else{
-            res.json({})
+            postload=true
+            if(pageload){
+                res.json({})
+            }
+        }
+    })
+})
+
+//帖子查找
+server.get('/posts/search',function(req,res){
+    let output={
+        totalPage:{},
+        post:{
+            title:{},
+            id:{},
+            content:{},
+            publishtime:{}
+        }
+    }
+    let pageload=false  //totalpage是否完成查询
+    let postload=false  //post是否完成查询
+    let info = URL.parse(req.url, true).query
+    let page = info.page
+    let pagesize = info.pagesize
+    let keyword=info.keyword
+    let limit1 = (page - 1) * pagesize
+
+    //查询总页数output.totalPage
+    let sql1='select count(id) num from post where title like "%'+keyword+'%"'
+    pool.query(sql1,function(err,result){
+        if(err) 
+            throw err
+        pageload=true
+        //获取总共页数totalPage
+        if(result[0].num%pagesize!=0)  
+            output.totalPage=Math.ceil(result[0].num/pagesize)  //向上取整
+        else
+            output.totalPage=result[0].num/pagesize
+        if(postload){
+            console.log(output)
+            res.json(output)
+        }
+    })
+
+     //查询帖子信息output.post
+    let sql2 = 'select id,title,content from post where title like "%'+keyword+'%" order by publishtime limit '+limit1+','+pagesize
+    pool.query(sql2,function (err, result) {
+        if (err) 
+            throw err
+        if (result.length > 0) {
+            postload=true
+            if(pageload){
+                //JSON格式化处理
+                var dataString = JSON.stringify(result)
+                var data = JSON.parse(dataString)
+                output.post=data
+                console.log(output)
+                res.json(output)
+            }
+        }
+        else{
+            postload=true
+            if(pageload){
+                res.json({})
+            }
         }
     })
 })
