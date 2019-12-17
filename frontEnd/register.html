@@ -11,6 +11,52 @@
     <script src="webDefault/bootstrap.bundle.min.js"></script>
 </head>
 <body class="background">
-    
+    <div>
+        <div id="login_wrap">
+            <div id="login">
+                <div id="status">
+                    <i style="top: 0">注</i>
+                    <i style="right: 5px">册</i>
+                </div>
+                <span>
+                    <form>
+                        <p class="form"><input type="text" id="id" placeholder="账号"></p>
+                        <p class="form"><input type="password" id="password" placeholder="密码"></p>
+                        <p class="form"><input type="text" id="nickname" placeholder="昵称"></p>
+                        <p class="form"><input type="text" id="bornyear" placeholder="出生年份"></p>
+                        <p class="form"><input type="text" id="description" placeholder="个人签名"></p>
+                    </form>
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-outline-primary">
+                          <input type="radio" name="sex" id="man" checked="checked"> 男
+                        </label>
+                        <label class="btn btn-outline-primary">
+                          <input type="radio" name="sex" id="woman"> 女
+                        </label>
+                    </div>
+                    <form>  
+                        <input type="button" value="登录" class="btn" onclick="location.href='login.html'" style="margin-right: 20px;">
+                        <input type="button" value="注册" class="btn"  >
+                    </form>
+                    
+                </span>
+            </div>
+
+            <div id="login_img">
+                <span class="circle">
+                </span>
+                <p id="title">SCNU</p>
+            </div>
+        </div>
+    </div>
 </body>
+<script>
+    //自动居中title
+    var name_c = document.getElementById("title")
+    name = name_c.innerHTML.split("")
+    name_c.innerHTML = ""
+    for (i = 0; i < name.length; i++)
+        if (name[i] != ",")
+            name_c.innerHTML += "<i>" + name[i] + "</i>"
+</script>
 </html>
