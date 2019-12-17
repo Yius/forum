@@ -1,21 +1,56 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>贴子详情</title>
-    <link href="webDefault/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/post.css" rel="stylesheet" />
-    <script src="webDefault/jquery-3.4.1.min.js"></script>
-    <script src="webDefault/bootstrap.bundle.min.js"></script>
-    <script src="js/post.js"></script>
-    <!--[if lt IE 9]>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>贴子详情</title>
+  <link href="webDefault/bootstrap.min.css" rel="stylesheet" />
+  <link href="css/post.css" rel="stylesheet" />
+  <script src="webDefault/jquery-3.4.1.min.js"></script>
+  <script src="webDefault/bootstrap.bundle.min.js"></script>
+  <script src="js/post.js"></script>
+  <!--[if lt IE 9]>
       <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <![endif]-->
 </head>
+
 <body class="background">
-    
+  <div class="container">
+    <nav class="navbar navbar-expand navbar-light" style="margin-top: 2%;;background-color: #e3f2fd;">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="info.html">个人信息</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="info.html">好友列表</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <ul class="list-unstyled" style="margin-top: 3%;" id="detailPosition">
+      
+    </ul>
+
+    <nav>
+      <ul class="pagination justify-content-center" id="bottomPage">
+      </ul>
+    </nav>
+
+
+  </div>
+  <script>
+    $(window).load(showPostDetail());
+  </script>
 </body>
+
 </html>
