@@ -15,10 +15,6 @@ html,body {
     -moz-background-size: cover;
 	-ms-background-size: cover;
 }
-@font-face {
-    font-family: 'neo';
-    src: url("../font/NEOTERICc.ttf");
-}
 input:focus{
 	outline: none;
 }
@@ -35,7 +31,6 @@ input:focus{
 .form input::placeholder{
     color: rgba(255, 255, 255, 0.75);
     font-size: 18px;
-    font-family: "neo";
 }
 .btn{
 	width:140px;
@@ -46,7 +41,6 @@ input:focus{
 	color: #fff;
     cursor: pointer;
     margin-top: 25px;
-    font-family: "neo";
     transition: .25s;
 }
 .btn:hover{
@@ -56,7 +50,6 @@ input:focus{
     width: 980px;
     min-height: 500px;
     border-radius: 10px;
-    font-family: "neo";
     overflow: hidden;
     box-shadow: 0px 0px 120px rgba(0, 0, 0, 0.25);
     position: fixed;
@@ -70,14 +63,13 @@ input:focus{
     height: 100%;
     min-height: 500px;
     background: rgba(255,255,255,.35);
-    /* background: linear-gradient(45deg, #9a444e, #e06267); */
     position: relative;
     float: right;
 }
 #login #status{
     width: 90px;
     height: 35px;
-    margin: 40px auto;
+    margin: 25px auto;
     color: #fff;
     font-size: 30px;
     font-weight: 600;
@@ -174,4 +166,74 @@ input:focus{
         width: 290px;
         margin-right: -145px;
     }
+}
+/* 动画 */
+@keyframes fade-in{  
+	0%{ opacity: 0;}
+	20%{opacity: 0.2;}
+	40%{opacity: 0.4;}
+	60%{ opacity: 0.6;}
+	80%{opacity: 0.8;}
+    100%{opacity:1;}
+}
+@-webkit-keyframes fade-in{
+	0%{ opacity: 0;}
+	20%{opacity: 0.2;}
+	40%{opacity: 0.4;}
+	60%{ opacity: 0.6;}
+	80%{opacity: 0.8;}
+    100%{opacity:1;}
+}
+@-ms-keyframes fade-in{
+	0%{ opacity: 0;}
+	20%{opacity: 0.2;}
+	40%{opacity: 0.4;}
+	60%{ opacity: 0.6;}
+	80%{opacity: 0.8;}
+    100%{opacity:1;}
+}
+@-o-keyframes fade-in{
+	0%{ opacity: 0;}
+	20%{opacity: 0.2;}
+	40%{opacity: 0.4;}
+	60%{ opacity: 0.6;}
+	80%{opacity: 0.8;}
+    100%{opacity:1;}
+}
+@-moz-keyframes fade-in{
+	0%{ opacity: 0;}
+	20%{opacity: 0.2;}
+	40%{opacity: 0.4;}
+	60%{ opacity: 0.6;}
+	80%{opacity: 0.8;}
+    100%{opacity:1;}
+}
+.first-words{ 
+    opacity: 0;   
+    animation: fade-in 0.25s ease 0s 1;
+    -webkit-animation: fade-in 0.25s ease 0s 1;
+    -moz-animation: fade-in 0.25s ease 0s 1;
+    -o-animation: fade-in 0.25s ease 0s 1;
+    -ms-animation: fade-in 0.25s ease 0s 1;
+    
+    animation-fill-mode:forwards;
+    -webkit-animation-fill-mode: forwards;  
+      -o-animation-fill-mode: forwards; 
+      -ms-animation-fill-mode: forwards;   
+      -moz-animation-fill-mode: forwards; 
+}
+
+.second-words{ 
+    opacity: 0;   
+    animation: fade-in 0.25s ease 0.25s 1;   
+    -webkit-animation: fade-in 0.25s ease 0.25s 1;
+    -moz-animation: fade-in 0.25s ease 0.25s 1;
+    -o-animation: fade-in 0.25s ease 0.25s 1;
+    -ms-animation: fade-in 0.25s ease 0.25s 1;
+    
+    animation-fill-mode:forwards;
+    -webkit-animation-fill-mode: forwards;  
+      -o-animation-fill-mode: forwards; 
+      -ms-animation-fill-mode: forwards;   
+      -moz-animation-fill-mode: forwards; 
 }
