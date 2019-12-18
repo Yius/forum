@@ -37,33 +37,42 @@
                 </ul>
                 <form class="form-inline">
                     <input class="form-control" type="search" placeholder="搜索贴子" aria-label="Search" id="search">
-                    <button class="btn btn-outline-info" onclick="queryPosts(1)">搜索</button>
+                    <button class="btn btn-outline-info" onclick="searchWord()" type="button">搜索</button>
                 </form>
             </div>
         </nav>
 
 
 
-        <ul class="list-unstyled" style="margin-top: 3%;" id="postPosition">
-            `<li class="media">
-                <img class="mr-3 indexBox" src="images/index_box.jfif" >
-                <div class="media-body">
-                    <h5 class="mt-0 mb-1"><a href="#">${postArr[i].title}</a></h5>
-                    ${postArr[i].content}
-                </div>
-            </li>`
-        </ul>
+        <div class="list-unstyled card" style="margin: 3% auto;" id="postPosition">
+        </div>
 
         <nav>
             <ul class="pagination justify-content-center" id="bottomPage">
             </ul>
         </nav>
 
+        <div class="card" style="margin-bottom: 3%;">
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="title">标题</label>
+                        <input type="text" class="form-control" id="title">
+                    </div>
+                    <div class="form-group">
+                        <label for="content">贴子内容</label>
+                        <textarea class="form-control" id="content" rows="10"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary"  onclick="addPost()">发布贴子</button>
+                </form>
+            </div>
+        </div>
+
     </div>
     <script>
-        if(window.location.href.indexOf("k")==-1){
+        if (window.location.href.indexOf("k") == -1) {
             $(window).load(showPosts());
-        }else{
+        } else {
             $(window).load(queryPosts());
         }
     </script>

@@ -6,4 +6,3 @@ INSERT INTO `post` (`id`, `title`, `content`, `uid`, `nickname`, `avatar`, `publ
 (66, 'dd', NULL, NULL, NULL, NULL, 555),
 (77, 'aaaaa', 'zzzz', NULL, NULL, NULL, 123),
 (99, 'fdsa', 'vvvv', NULL, NULL, NULL, 2087);
-

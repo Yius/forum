@@ -8,29 +8,20 @@ CREATE TABLE user(
     password VARCHAR(20),
     nickname VARCHAR(20),
     gender VARCHAR(5),
-    age SMALLINT,
+    bornyear SMALLINT,
     description VARCHAR(200),
     avatar VARCHAR(200),
     PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS post;
-CREATE TABLE post(
-    id INT AUTO_INCREMENT,
-    title VARCHAR(50),
-    content VARCHAR(200),
-    uid VARCHAR(20),
-    nickname VARCHAR(20),
-    avatar VARCHAR(200),
-    publishtime BIGINT,
-    PRIMARY KEY(id)
-);
 
 DROP TABLE IF EXISTS talkinfo;
 CREATE TABLE talkinfo(
     id INT AUTO_INCREMENT,
     content VARCHAR(200),
     senderid VARCHAR(20),
+    sendername VARCHAR(20),
     receiverid VARCHAR(20),
     receivername VARCHAR(20),
     sendtime BIGINT,
@@ -49,6 +40,9 @@ CREATE TABLE postreply(
     directreply SMALLINT,
     replyto INT,
     postgroup INT,
+    replygroup INT,
+    content VARCHAR(200),
+    title VARCHAR(50),
     PRIMARY KEY(id)
 );
 

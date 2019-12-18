@@ -37,15 +37,25 @@
       </div>
     </nav>
 
-    <ul class="list-unstyled" style="margin-top: 3%;" id="detailPosition">
-      
-    </ul>
+    <div class="list-unstyled card" style="margin: 3% auto;" id="detailPosition">
+    </div>
 
     <nav>
       <ul class="pagination justify-content-center" id="bottomPage">
       </ul>
     </nav>
 
+    <div class="card" style="margin-bottom: 3%;">
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <label for="content">贴子内容</label>
+            <textarea class="form-control" id="content" rows="10"></textarea>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="addReply()">回复</button>
+        </form>
+      </div>
+    </div>
 
   </div>
   <script>
