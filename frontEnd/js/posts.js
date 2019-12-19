@@ -1,7 +1,7 @@
 function queryPosts() {
     var originKeyword = window.location.href.substring(window.location.href.indexOf("w")+2);
     var keyword = decodeURI(originKeyword)
-    var url = "10.252.8.38:5050";
+    var url = globalConfig.url;
     let curCul = window.location.href;
     let start = curCul.indexOf("=")+1;
     let end = curCul.indexOf("&");
@@ -83,7 +83,7 @@ function showPosts() {
 
     var currentPage = parseInt(window.location.href.substring(window.location.href.indexOf("=")+1))
     var para = { "page": currentPage, "pagesize": 20 };
-    var url = "10.252.8.38:5050";
+    var url = globalConfig.url;
     $.ajax({
         method: 'GET',
         url: `http://${url}/posts/list`,
@@ -178,6 +178,7 @@ function transformTime(timestamp = +new Date()) {
 
 function addPost(){
     var para = {"title":document.getElementById('title').value,"content":document.getElementById('content').value,"publishtime":transformTime((new Date()).getTime())}
+    var url = globalConfig.url;
     $.ajax({
         method: 'POST',
         url: `http://${url}/posts/add`,

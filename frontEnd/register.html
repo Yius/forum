@@ -10,6 +10,7 @@
     <script src="webDefault/jquery-3.4.1.min.js"></script>
     <script src="webDefault/bootstrap.bundle.min.js"></script>
     <script src="js/register.js"></script>
+    <script src="js/config.js"></script>
     <!--[if lt IE 9]>
       <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
@@ -28,20 +29,20 @@
                         <p class="form"><input type="text" id="id" placeholder="账号"></p>
                         <p class="form"><input type="password" id="password" placeholder="密码"></p>
                         <p class="form"><input type="text" id="nickname" placeholder="昵称"></p>
-                        <p class="form"><input type="text" id="bornyear" placeholder="出生年份"></p>
+                        <p class="form"><input type="date" id="bornyear" placeholder="出生年份"></p>
                         <p class="form"><textarea id="description" placeholder="个人介绍(限50字)" maxlength="50" rows="3"></textarea></p>
                     </form>
                     <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-outline-primary">
-                          <input type="radio" name="sex" id="man" checked="checked"> 男
+                          <input type="radio" name="sex" checked="checked" value="M"> 男
                         </label>
                         <label class="btn btn-outline-primary">
-                          <input type="radio" name="sex" id="woman"> 女
+                          <input type="radio" name="sex" value="F"> 女
                         </label>
                     </div>
                     <form>  
                         <button type="button" class="btn" onclick="location.href='login.html'" style="margin-right: 20px;">返回</button>
-                        <button type="button" class="btn" onclick="location.href='login.html'">注册</button>
+                        <button type="button" class="btn" onclick="registerHelp()">注册</button>
                     </form>
                     
                 </span>

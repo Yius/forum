@@ -1,6 +1,6 @@
 function showPostDetail() {
 
-    var url = "10.252.8.38:5050";
+    var url = globalConfig.url;
     var curCul = window.location.href.substring(window.location.href.indexOf("?"));
     var start = curCul.indexOf("=") + 1;
     var end = curCul.indexOf("&");
@@ -112,7 +112,7 @@ function showPostDetail() {
 }
 
 function showReplys(replygroup,page){
-    var url = "10.252.8.38:5050";
+    var url = globalConfig.url;
     var para = { "replygroup": replygroup, "page": page };
     $.ajax({
         method: 'GET',
@@ -214,7 +214,7 @@ function showReplys(replygroup,page){
 //跟帖回复
 function addReply(){
     var id = parseInt(window.location.href.substring(window.location.href.indexOf("=")+1));
-    var url = "10.252.8.38:5050";
+    var url = globalConfig.url;
     var para = {"directReply":1,"content":document.getElementById('content').value,"publishtime":transformTime((new Date()).getTime()),
                 "replyto":id,"postgroup":id};
     $.ajax({
@@ -239,7 +239,7 @@ function addInnerReply(id){
     var postgroup = parseInt(window.location.href.substring(window.location.href.indexOf("=")+1));
     var para = {"directReply":0,"content":$(`#content${id}`).val(),"publishtime":transformTime((new Date()).getTime()),
                 "replyto":id,"postgroup":postgroup,"replygroup":id};
-    var url = "10.252.8.38:5050";
+    var url = globalConfig.url;
     $.ajax({
         method: 'POST',
         url: `http://${url}/post/replyto`,
@@ -264,6 +264,7 @@ function addInnerReplyToOthers(replygroup,replyto){
     var content = "回复" + document.getElementById(`name${replyto}`).value + ":"+document.getElementById(`content${replygroup}`).value;
     var para = {"directReply":0,"content":content,"publishtime":transformTime((new Date()).getTime()),
                 "replyto":replyto,"postgroup":postgroup,"replygroup":replygroup};
+    var url = globalConfig.url;
     $.ajax({
         method: 'POST',
         url: `http://${url}/post/replyto`,
