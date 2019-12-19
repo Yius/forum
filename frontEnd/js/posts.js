@@ -9,6 +9,9 @@ function queryPosts() {
     var page = currentPage;
     var para = { "keyword": keyword, "page": page, "pagesize": 20 };
     $.ajax({
+        xhrFields:{
+            withCredentials:true
+        },
         method: 'GET',
         url: `http://${url}/posts/search`,
         data: para,
@@ -85,6 +88,9 @@ function showPosts() {
     var para = { "page": currentPage, "pagesize": 20 };
     var url = globalConfig.url;
     $.ajax({
+        xhrFields:{
+            withCredentials:true
+        },
         method: 'GET',
         url: `http://${url}/posts/list`,
         data: para,

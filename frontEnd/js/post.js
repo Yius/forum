@@ -11,6 +11,9 @@ function showPostDetail() {
     var pagesize = 20;
     var para = { "id": id, "page": currentPage, "pagesize": pagesize };
     $.ajax({
+        xhrFields:{
+            withCredentials:true
+        },
         method: 'GET',
         url: `http://${url}/post/alldetail`,
         data: para,
@@ -115,6 +118,9 @@ function showReplys(replygroup,page){
     var url = globalConfig.url;
     var para = { "replygroup": replygroup, "page": page };
     $.ajax({
+        xhrFields:{
+            withCredentials:true
+        },
         method: 'GET',
         url: `http://${url}/post/replys`,
         data: para,

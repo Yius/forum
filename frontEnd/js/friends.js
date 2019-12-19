@@ -1,11 +1,12 @@
+var last = null;
 function getFriends(){
-    var id = 1;
-    var para = { "id": id};
     var url = globalConfig.url;
     $.ajax({
+        xhrFields:{
+            withCredentials:true
+        },
         method: 'GET',
         url: `http://${url}/friends/list`,
-        data: para,
         success: (data) => {
             let friendsHTML =
             `<nav>
@@ -13,10 +14,9 @@ function getFriends(){
                     <li class="breadcrumb-item"><span style="font-size: large;">好友列表</span></li>
                 </ol>
             </nav>`;
-
             for(let i=0;i<data.length;++i){
                 friendsHTML +=
-                `<div onclick="showTalkHistory(${data[i].fid,data[i].receiverName,data[i].receiverAvatar})" class="media card-body" style="border-bottom: solid gainsboro 1px;height: 90px">
+                `<div onclick="go('${data[i].fid}','${data[i].fname}','${data[i].favatar}')" class="media card-body" style="border-bottom: solid gainsboro 1px;height: 90px">
                     <img style="margin-top: -12px;" class="align-self-start mr-4 avatarBox img-thumbnail" src="images/index_box.png">
                     <div class="media-body" style="margin-top: -20px;">
                         <br>
@@ -24,7 +24,6 @@ function getFriends(){
                     </div>
                 </div>`;
             }
-
             friendsHTML +=
             `<div class="media card-body" style="height: 300px;">
             </div>`
@@ -44,6 +43,9 @@ function showTalkHistory(to,receiverName,receiverAvatar){
     var para = { "to": to};
     var url = globalConfig.url;
     $.ajax({
+        xhrFields:{
+            withCredentials:true
+        },
         method: 'GET',
         url: `http://${url}/friends/talk`,
         data: para,
@@ -69,17 +71,20 @@ function showTalkHistory(to,receiverName,receiverAvatar){
     
             }
 
-            let sendHTML = 
-            `<input type="text" class="inputBar" id="inputContent">
-            <button onclick="sendMessage()" type="button" class="btn btn-primary" style="width: 10%;margin-left: 3% ;">发送</button>`;
 
             $('#talk_div').html(talkHTML);
-            $('#send_div').html(sendHTML);
         },
         error: (xhr, err) => {
             alert('贴子加载失败');
         }
     });
+}
+
+function showInputBar(){
+    let sendHTML = 
+    `<input type="text" class="inputBar" id="inputContent">
+    <button onclick="sendMessage()" type="button" class="btn btn-primary" style="width: 10%;margin-left: 3% ;">发送</button>`;
+    $('#send_div').html(sendHTML);
 }
 
 function sendMessage(){
@@ -105,9 +110,10 @@ function sendMessage(){
         xhrFields:{
             withCredentials:true
         },
-        url: `http://${url}/friends/sendmsg`,
+        url: `http://${globalConfig.url}/friends/sendmsg`,
         data: para,
         success: (data) => {
+            document.getElementById("inputContent").value = "";
             if(data.code!=200){
                 alert("发送失败");
             }
@@ -123,4 +129,12 @@ function isChinese(temp){
     var re=/[^\u4E00-\u9FA5]/;
     if (re.test(temp)) return false ;
     return true ;
+}
+
+function go(fid,receiverName,receiverAvatar){
+    if(last==null){
+        showInputBar();
+    }
+    clearInterval(last);
+    last = setInterval(`showTalkHistory('${fid}','${receiverName}','${receiverAvatar}')`,1000);
 }
