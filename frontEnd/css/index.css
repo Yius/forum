@@ -13,7 +13,7 @@
 	display: block;
 	margin: 30px auto;
 	text-align: center;
-	border: 2px solid #6495ED;
+	border: 2px solid #ffffff;
 	padding: 14px 25px;
 	outline: none;
 	color: white;
@@ -103,11 +103,11 @@
 }
 .first-words{ 
     opacity: 0;   
-    animation: fade-in 0.75s ease 0s 1;
-    -webkit-animation: fade-in 0.75s ease 0s 1;
-    -moz-animation: fade-in 0.75s ease 0s 1;
-    -o-animation: fade-in 0.75s ease 0s 1;
-    -ms-animation: fade-in 0.75s ease 0s 1;
+    animation: fade-in 0.5s ease 0.5s 1;
+    -webkit-animation: fade-in 0.5s ease 0.5s 1;
+    -moz-animation: fade-in 0.5s ease 0.5s 1;
+    -o-animation: fade-in 0.5s ease 0.5s 1;
+    -ms-animation: fade-in 0.5s ease 0.5s 1;
     
     animation-fill-mode:forwards;
     -webkit-animation-fill-mode: forwards;  
@@ -118,11 +118,11 @@
 
 .second-words{ 
     opacity: 0;   
-    animation: fade-in 0.75s ease 0.75s 1;   
-    -webkit-animation: fade-in 0.75s ease 0.75s 1;
-    -moz-animation: fade-in 0.75s ease 0.75s 1;
-    -o-animation: fade-in 0.75s ease 0.75s 1;
-    -ms-animation: fade-in 0.75s ease 0.75s 1;
+    animation: fade-in 0.5s ease 1s 1;   
+    -webkit-animation: fade-in 0.5s ease 1s 1;
+    -moz-animation: fade-in 0.5s ease 1s 1;
+    -o-animation: fade-in 0.5s ease 1s 1;
+    -ms-animation: fade-in 0.5s ease 1s 1;
     
     animation-fill-mode:forwards;
     -webkit-animation-fill-mode: forwards;  

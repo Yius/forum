@@ -71,7 +71,7 @@ input:focus{
     height: 35px;
     margin: 25px auto;
     color: #fff;
-    font-size: 30px;
+    font-size: 27px;
     font-weight: 600;
     position: relative;
     overflow: hidden;
@@ -210,11 +210,11 @@ input:focus{
 }
 .first-words{ 
     opacity: 0;   
-    animation: fade-in 0.25s ease 0s 1;
-    -webkit-animation: fade-in 0.25s ease 0s 1;
-    -moz-animation: fade-in 0.25s ease 0s 1;
-    -o-animation: fade-in 0.25s ease 0s 1;
-    -ms-animation: fade-in 0.25s ease 0s 1;
+    animation: fade-in 0.25s ease 0.25s 1;
+    -webkit-animation: fade-in 0.25s ease 0.25s 1;
+    -moz-animation: fade-in 0.25s ease 0.25s 1;
+    -o-animation: fade-in 0.25s ease 0.25s 1;
+    -ms-animation: fade-in 0.25s ease 0.25s 1;
     
     animation-fill-mode:forwards;
     -webkit-animation-fill-mode: forwards;  
@@ -225,11 +225,11 @@ input:focus{
 
 .second-words{ 
     opacity: 0;   
-    animation: fade-in 0.25s ease 0.25s 1;   
-    -webkit-animation: fade-in 0.25s ease 0.25s 1;
-    -moz-animation: fade-in 0.25s ease 0.25s 1;
-    -o-animation: fade-in 0.25s ease 0.25s 1;
-    -ms-animation: fade-in 0.25s ease 0.25s 1;
+    animation: fade-in 0.25s ease 0.5s 1;   
+    -webkit-animation: fade-in 0.25s ease 0.5s 1;
+    -moz-animation: fade-in 0.25s ease 0.5s 1;
+    -o-animation: fade-in 0.25s ease 0.5s 1;
+    -ms-animation: fade-in 0.25s ease 0.5s 1;
     
     animation-fill-mode:forwards;
     -webkit-animation-fill-mode: forwards;  
