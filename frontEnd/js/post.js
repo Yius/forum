@@ -219,6 +219,9 @@ function addReply(){
                 "replyto":id,"postgroup":id};
     $.ajax({
         method: 'POST',
+        xhrFields:{
+            withCredentials:true
+        },
         url: `http://${url}/post/replyto`,
         data: para,
         success: (data) => {
@@ -242,6 +245,9 @@ function addInnerReply(id){
     var url = globalConfig.url;
     $.ajax({
         method: 'POST',
+        xhrFields:{
+            withCredentials:true
+        },
         url: `http://${url}/post/replyto`,
         data: para,
         success: (data) => {
@@ -267,6 +273,9 @@ function addInnerReplyToOthers(replygroup,replyto){
     var url = globalConfig.url;
     $.ajax({
         method: 'POST',
+        xhrFields:{
+            withCredentials:true
+        },
         url: `http://${url}/post/replyto`,
         data: para,
         success: (data) => {

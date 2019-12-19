@@ -181,6 +181,9 @@ function addPost(){
     var url = globalConfig.url;
     $.ajax({
         method: 'POST',
+        xhrFields:{
+            withCredentials:true
+        },
         url: `http://${url}/posts/add`,
         data: para,
         success: (data) => {

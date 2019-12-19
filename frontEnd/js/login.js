@@ -3,6 +3,9 @@ function loginCheck() {
     para = { "id": document.getElementById("id").value, "password": document.getElementById("password").value };
     $.ajax({
         method: 'POST',
+        xhrFields:{
+            withCredentials:true
+        },
         url: `http://${url}/login`,
         data: para,
         success: (data) => {
