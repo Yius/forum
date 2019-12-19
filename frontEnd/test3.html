@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="webDefault/jquery-3.4.1.min.js"></script>
+  <script src="webDefault/bootstrap.bundle.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" name="" id="uid">
+    <input type="password" name="" id="pwd">
+    <button onclick="test()" value="dsada">dasssssss</button>
+</body>
+<script>
+    var url = "10.252.8.38:5050";
+    function test() {
+        para = { "id": document.getElementById("uid").value, "password": document.getElementById("pwd").value };
+        $.ajax({
+            method: 'POST',
+            url: `http://${url}/login`,
+            data: para,
+            success: (data) => {
+                if(data.code == 200){
+                    alert("ok");
+                    window.location.href = "test2.html";
+                }else{
+                    alert("no");
+                }
+            },
+            error: (xhr, err) => {
+                alert('查看贴子详情失败');
+            }
+        });
+    }
+</script>
+
+</html>

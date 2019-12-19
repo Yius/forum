@@ -91,7 +91,7 @@
             </nav>
             <button class="btn btn-primary" style="width: 10%;margin-left: 85%;margin-bottom: 2%;"
               data-toggle="collapse" href="#cc">我说几句</button>
-              <!-- 内部回复框 -->
+            <!-- 内部回复框 -->
             <div class="collapse" id="cc">
               <div class="card">
                 <div class="card-body">
@@ -123,12 +123,52 @@
       </div>
     </div>
 
+    <div class="input-file-box">
+      <span>点击上传图片</span>
+      <input type="file" name="" id="uploadfile">
+    </div>
+    <img id="img-box">
+
+
+
   </div>
+
+
+  <div class="talk_con">
+    <div class="talk_show" id="words">
+    </div>
+    <div class="talk_input">
+        <span class="whotalk" id="who">聊天内容：
+        </span>
+        <input type="text" class="talk_word" id="talkwords">
+        <button class="btn btn-primary" id="talksub" onclick="sendmsg()">发送</button>
+    </div>
+</div>
+
+
 </body>
 <script>
-  function fuck() {
-    alert("faso");
+  window.onload = function () {
+    var input = document.getElementById("uploadfile");
+    var div;
+    // 当用户上传时触发事件
+    input.onchange = function () {
+      readFile(this);
+    }
+    //处理图片并添加都dom中的函数
+    var readFile = function (obj) {
+      // 获取input里面的文件组
+      var file = obj.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      // 当文件读取成功时执行的函数
+      reader.onload = function (e) {
+        $("#img-box").attr("src", this.result);
+      }
+    }
   }
+
+
 </script>
 
 </html>

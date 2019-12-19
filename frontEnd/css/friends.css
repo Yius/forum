@@ -1,0 +1,10 @@
+.avatarBox{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.nameFont{
+    font-weight: 1000;
+    font-size: medium;
+}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="webDefault/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/posts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/post.css">
+    <script src="webDefault/jquery-3.4.1.min.js"></script>
+    <script src="webDefault/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        .inner {
+            width: 265px;
+            height: 400px;
+            position: absolute;
+            top: 33px;
+            left: 13px;
+            overflow: hidden;
+        }
+
+        .innerbox {
+            overflow-x: hidden;
+            overflow-y: auto;
+            color: #000;
+            font-size: .7rem;
+            font-family: "\5FAE\8F6F\96C5\9ED1", Helvetica, "黑体", Arial, Tahoma;
+            height: 100%;
+        }
+
+        /*滚动条样式*/
+        .innerbox::-webkit-scrollbar {
+            width: 4px;
+            /*height: 4px;*/
+        }
+
+        .innerbox::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .innerbox::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            border-radius: 0;
+            background: rgba(0, 0, 0, 0.1);
+
+        }
+
+        .scrollbar {
+            width: 30px;
+            height: 300px;
+            margin: 0 auto;
+        }
+
+        .bubble {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            color: #86181d;
+            background-color: #ffdce0;
+            border-color: #cea0a5;
+            display: block;
+            border: 1px solid;
+            border-radius: 4px;
+            padding: 2px;
+        }
+
+        .bubble::before {
+            content: ' ';
+            display: block;
+            border-right: 7px solid #ffdce0;
+            border-left: 7px solid transparent;
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
+            width: 0px;
+            height: 0px;
+            position: absolute;
+            top: 4px;
+            left: -14px;
+            z-index: 3;
+        }
+
+        .bubble::after {
+            content: ' ';
+            display: block;
+            border-right: 8px solid #86181d;
+            border-left: 8px solid transparent;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            width: 0px;
+            height: 0px;
+            position: absolute;
+            top: 3px;
+            left: -16.5px;
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 注意高度设置 -->
+    <div class="list-unstyled card innerbox" style="margin: 3% auto 3% 15%;width: 22%;height: 620px;float: left;"
+        id="detailPosition">
+        <nav>
+            <ol class="breadcrumb" style="background-color:#93d5dc;">
+                <li class="breadcrumb-item"><span style="font-size: large;">好友列表</span></li>
+            </ol>
+        </nav>
+        <div class="media card-body" style="border-bottom: solid gainsboro 1px;height: 120px">
+            <div>
+                <img class="align-self-start mr-4 avatarBox img-thumbnail" src="images/index_box.png">
+            </div>
+            <div class="media-body">
+                <br>
+                <p class="nameFont">${postArr[i].content}</p>
+            </div>
+        </div>
+        <div class="media card-body" style="border-bottom: solid gainsboro 1px;height: 120px;">
+            <div>
+                <img class="align-self-start mr-4 avatarBox " src="images/index_box.png">
+            </div>
+            <div class="media-body">
+                <p>${postArr[i].content}</p>
+            </div>
+        </div>
+        <div class="media card-body" style="border-bottom: solid gainsboro 1px;height: 120px;">
+            <div>
+                <img class="align-self-start mr-4 avatarBox " src="images/index_box.png">
+            </div>
+            <div class="media-body">
+                <p>${postArr[i].content}</p>
+            </div>
+        </div>
+        <div class="media card-body" style="border-bottom: solid gainsboro 1px;height: 120px;">
+            <div>
+                <img class="align-self-start mr-4 avatarBox " src="images/index_box.png">
+            </div>
+            <div class="media-body">
+                <p>${postArr[i].content}</p>
+            </div>
+        </div>
+        <div class="media card-body" style="border-bottom: solid gainsboro 1px;height: 120px;">
+            <div>
+                <img class="align-self-start mr-4 avatarBox " src="images/index_box.png">
+            </div>
+            <div class="media-body">
+                <p>${postArr[i].content}</p>
+            </div>
+        </div>
+        <div class="media card-body" style="height: 300px;">
+        </div>
+    </div>
+    <div style="width: 50%;height: 620px;float: left;margin-top: 3%;">
+        <div style="height: 570px;width: 100%;border-bottom:solid gainsboro;border-top: solid gainsboro;border-right: solid gainsboro;border-radius: 5px;">
+            <div style="margin-top:3% ;border: solid red;">
+                
+                <img src="images/index_box.png" alt="" class="avatarBox" style="float: left;margin-left: 3%;">
+                <div class="bubble" style="margin-left: 8%;word-break: break-all;width: 8%;">dsaddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaaaaaaaaaaaa</div>
+            </div>
+        </div>
+        <div style="height: 50px; border-bottom: solid gainsboro;border-right:solid gainsboro;border-radius: 5px;">
+            <input type="text" style="margin-left: 3%;margin-top: 9px; width: 80%;border-radius: 3px;">
+            <button type="button" class="btn btn-primary" style="width: 10%;margin-left: 3% ;">发送</button>
+        </div>
+    </div>
+
+
+    
+
+</body>
+
+</html>
