@@ -20,8 +20,8 @@
         <div id="login_wrap">
             <div id="login">
                 <div id="status">
-                    <i style="top: 0">注</i>
-                    <i style="right: 5px">册</i>
+                    <i style="top: 0" class="first-words" >注</i>
+                    <i style="right: 5px" class="second-words">册</i>
                 </div>
                 <span>
                     <form>
@@ -29,7 +29,7 @@
                         <p class="form"><input type="password" id="password" placeholder="密码"></p>
                         <p class="form"><input type="text" id="nickname" placeholder="昵称"></p>
                         <p class="form"><input type="text" id="bornyear" placeholder="出生年份"></p>
-                        <p class="form"><input type="text" id="description" placeholder="个人签名"></p>
+                        <p class="form"><textarea id="description" placeholder="个人介绍(限50字)" maxlength="50" rows="3"></textarea></p>
                     </form>
                     <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-outline-primary">
@@ -40,8 +40,8 @@
                         </label>
                     </div>
                     <form>  
-                        <input type="button" value="登录" class="btn" onclick="location.href='login.html'" style="margin-right: 20px;">
-                        <input type="button" value="注册" class="btn"  >
+                        <button type="button" class="btn" onclick="location.href='login.html'" style="margin-right: 20px;">返回</button>
+                        <button type="button" class="btn" onclick="location.href='login.html'">注册</button>
                     </form>
                     
                 </span>
