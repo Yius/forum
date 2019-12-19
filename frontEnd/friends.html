@@ -1,21 +1,41 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>好友列表</title>
-    <link href="webDefault/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/friends.css" rel="stylesheet" />
-    <script src="webDefault/jquery-3.4.1.min.js"></script>
-    <script src="webDefault/bootstrap.bundle.min.js"></script>
-    <script src="js/friends.js"></script>
-    <!--[if lt IE 9]>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>好友列表</title>
+  <link href="webDefault/bootstrap.min.css" rel="stylesheet" />
+  <link href="css/friends.css" rel="stylesheet" />
+  <script src="webDefault/jquery-3.4.1.min.js"></script>
+  <script src="webDefault/bootstrap.bundle.min.js"></script>
+  <script src="js/friends.js"></script>
+  <link rel="stylesheet" href="css/friends.css">
+  <script src="js/config.js"></script>
+  <!--[if lt IE 9]>
       <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <![endif]-->
 </head>
+
 <body class="background">
-    
+
+  <div id="data" style="display: none;"></div>
+
+  <div class="list-unstyled card innerbox" style="margin: 4% auto 3% 15%;width: 22%;height: 620px;float: left;" id="friendsList">
+  </div>
+
+  <div style="width: 50%;height: 620px;float: left;margin-top: 4%;">
+    <div id="talk_div" style="height: 570px;width: 100%;border-bottom:solid gainsboro;border-top: solid gainsboro;border-right: solid gainsboro;border-radius: 5px;overflow-y: scroll;">
+    </div>
+    <div id="send_div" style="height: 50px; border-bottom: solid gainsboro;border-right:solid gainsboro;border-radius: 5px;">
+  </div>
+</div>
+
+
 </body>
+<script>
+  $(window).load(getFriends());
+</script>
 </html>

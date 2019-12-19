@@ -5,52 +5,128 @@
     -webkit-background-size: cover;
     -o-background-size: cover;
     -moz-background-size: cover;
-    -ms-background-size: cover;
+	-ms-background-size: cover;
+}
+.button{
+	border: 0;
+	background: none;
+	display: block;
+	margin: 30px auto;
+	text-align: center;
+	border: 2px solid #ffffff;
+	padding: 14px 25px;
+	outline: none;
+	color: white;
+	border-radius:24px;
+	transition: 0.25s;
+    cursor: pointer;
+}
+.button:hover{
+    background: #6495ED;
+}
+.tab-h1 {
+
+	color:#ffffff;	
+	font-size:50px;	
+	letter-spacing: 1px;	
+	text-align:center;	
+	margin:45px 0 10px;	
+	}
+@media screen and (min-width: 768px) {
+	.tab-h1 {
+		font-size:75px;		
+	}
+	.button{
+		padding: 18px 30px;
+		font-size: 20px;
+	}
+}
+@media screen and (min-width: 992px) {
+	.tab-h1 {
+		font-size:100px;		
+	}
+	.button{
+		padding: 20px 35px;
+		font-size: 25px;
+	}
+}
+.parent{
+	position: relative;
+}
+.child{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,50%);
 }
 
-.welcome{
-	position: absolute;
-	top: 65%;
-    left: 50%;
-    margin: -150px 0 0 -200px;
-    width: 400px;
-    height: 300px;
+/* 动画 */
+@keyframes fade-in{  
+	0%{ opacity: 0;}
+	20%{opacity: 0.2;}
+	40%{opacity: 0.4;}
+	60%{ opacity: 0.6;}
+	80%{opacity: 0.8;}
+    100%{opacity:1;}
 }
-.welcome h1{
-    color: #ffffff;
-    font-size: 350%;
-    text-shadow: 0 0 300px #000;
+@-webkit-keyframes fade-in{
+	0%{ opacity: 0;}
+	20%{opacity: 0.2;}
+	40%{opacity: 0.4;}
+	60%{ opacity: 0.6;}
+	80%{opacity: 0.8;}
+    100%{opacity:1;}
 }
-.button1{
-	border: 0;
-	background: none;
-	display: block;
-	margin: 20px auto;
-	text-align: center;
-	border: 2px solid #6495ED;
-	padding: 14px 40px;
-	outline: none;
-	color: white;
-	border-radius:24px;
-	transition: 0.25s;
-    cursor: pointer;
-    float: right;
+@-ms-keyframes fade-in{
+	0%{ opacity: 0;}
+	20%{opacity: 0.2;}
+	40%{opacity: 0.4;}
+	60%{ opacity: 0.6;}
+	80%{opacity: 0.8;}
+    100%{opacity:1;}
 }
-.button2{
-	border: 0;
-	background: none;
-	display: block;
-	margin: 20px auto;
-	text-align: center;
-	border: 2px solid #6495ED;
-	padding: 14px 40px;
-	outline: none;
-	color: white;
-	border-radius:24px;
-	transition: 0.25s;
-    cursor: pointer;
-    float: left;
+@-o-keyframes fade-in{
+	0%{ opacity: 0;}
+	20%{opacity: 0.2;}
+	40%{opacity: 0.4;}
+	60%{ opacity: 0.6;}
+	80%{opacity: 0.8;}
+    100%{opacity:1;}
 }
-.button1:hover , .button2:hover{
-    background: #6495ED;
+@-moz-keyframes fade-in{
+	0%{ opacity: 0;}
+	20%{opacity: 0.2;}
+	40%{opacity: 0.4;}
+	60%{ opacity: 0.6;}
+	80%{opacity: 0.8;}
+    100%{opacity:1;}
+}
+.first-words{ 
+    opacity: 0;   
+    animation: fade-in 0.5s ease 0.5s 1;
+    -webkit-animation: fade-in 0.5s ease 0.5s 1;
+    -moz-animation: fade-in 0.5s ease 0.5s 1;
+    -o-animation: fade-in 0.5s ease 0.5s 1;
+    -ms-animation: fade-in 0.5s ease 0.5s 1;
+    
+    animation-fill-mode:forwards;
+    -webkit-animation-fill-mode: forwards;  
+      -o-animation-fill-mode: forwards; 
+      -ms-animation-fill-mode: forwards;   
+      -moz-animation-fill-mode: forwards; 
+}
+
+.second-words{ 
+    opacity: 0;   
+    animation: fade-in 0.5s ease 1s 1;   
+    -webkit-animation: fade-in 0.5s ease 1s 1;
+    -moz-animation: fade-in 0.5s ease 1s 1;
+    -o-animation: fade-in 0.5s ease 1s 1;
+    -ms-animation: fade-in 0.5s ease 1s 1;
+    
+    animation-fill-mode:forwards;
+    -webkit-animation-fill-mode: forwards;  
+      -o-animation-fill-mode: forwards; 
+      -ms-animation-fill-mode: forwards;   
+      -moz-animation-fill-mode: forwards; 
 }
