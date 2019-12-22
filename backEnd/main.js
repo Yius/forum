@@ -839,3 +839,7 @@ server.get('/info/mine', function (req, res) {
         }
     })
 })
+
+/**
+ * API 16、获取个人信息
+ */
