@@ -34,6 +34,9 @@
           <li class="nav-item">
             <a class="nav-link" href="info.html">好友列表</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" onclick="logOut()">退出登录</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -58,9 +61,59 @@
       </div>
     </div>
 
+    <div style="display: none;" id="interestsUserIDDiv">
+    </div>
+    <div style="display: none;" id="innerReplyToOthersDiv">
+    </div>
+
+    <!-- 模态框 -->
+    <div class="modal fade" id="infoModal" role="dialog">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="infoModalLabel">提示信息</h5>
+                  <button type="button" class="close" data-dismiss="modal">
+                      <span>&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  你好像对这名用户感兴趣哦~
+              </div>
+              <div class="modal-footer">
+                  <button type="button" style="margin-right: 50%;" class="btn btn-primary" onclick="peekOthersInfo()">查看Ta的信息</button>
+                  <button type="button" class="btn btn-primary" onclick="becomeFriends()">加为好友</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
   </div>
   <script>
-    $(window).load(showPostDetail());
+    $(window).on('load',showPostDetail());
+  </script>
+  <script>
+    //不能将logOut()写在js文件夹内，原因我推测是nav-link在搞鬼
+    function logOut(){
+        var url = globalConfig.url;
+        $.ajax({
+            method: 'GET',
+            xhrFields:{
+                withCredentials:true
+            },
+            url: `http://${url}/user/logout`,
+            success: (data) => {
+                if(data.code==200){
+                    alert('您已成功退出登录，即将跳转到首页');
+                    window.location.href = "index.html";
+                }else{
+                    alert('未知原因，退出失败');
+                }
+            },
+            error: (xhr, err) => {
+                alert('退出失败');
+            }
+        })
+    }
   </script>
 </body>
 

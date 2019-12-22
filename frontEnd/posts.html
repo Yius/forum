@@ -35,6 +35,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="friends.html">好友列表</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)" onclick="logOut()">退出登录</a>
+                    </li>
                 </ul>
                 <form class="form-inline">
                     <input class="form-control" type="search" placeholder="搜索贴子" aria-label="Search" id="search">
@@ -72,9 +75,33 @@
     </div>
     <script>
         if (window.location.href.indexOf("k") == -1) {
-            $(window).load(showPosts());
+            $(window).on('load',showPosts());
         } else {
-            $(window).load(queryPosts());
+            $(window).on('load',queryPosts());
+        }
+    </script>
+    <script>
+        //不能将logOut()写在js文件夹内，原因我推测是nav-link在搞鬼
+        function logOut(){
+            var url = globalConfig.url;
+            $.ajax({
+                method: 'GET',
+                xhrFields:{
+                    withCredentials:true
+                },
+                url: `http://${url}/user/logout`,
+                success: (data) => {
+                    if(data.code==200){
+                        alert('您已成功退出登录，即将跳转到首页');
+                        window.location.href = "index.html";
+                    }else{
+                        alert('未知原因，退出失败');
+                    }
+                },
+                error: (xhr, err) => {
+                    alert('退出失败');
+                }
+            })
         }
     </script>
 </body>

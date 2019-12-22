@@ -31,7 +31,7 @@ function registerHelp(){
             }
         },
         error: (xhr, err) => {
-            alert('未知原因，登录失败');
+            alert('未知原因，注册失败');
         }
     });
 }

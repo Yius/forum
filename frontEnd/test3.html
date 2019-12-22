@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="js/test3.js"></script>
+    <link href="webDefault/bootstrap.min.css" rel="stylesheet" />
+    <script src="webDefault/jquery-3.4.1.min.js"></script>
+    <script src="webDefault/bootstrap.bundle.min.js"></script>
 </head>
+
 <body>
     <input type="text" id="line">
     <button onclick="go()">aaa</button>
+    <a data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+    </a>
+    <div class="modal fade" id="infoModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoModalLabel">提示信息</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    你好像对这名用户感兴趣哦~
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="margin-right: 50%;" class="btn btn-primary"
+                        onclick="peekOthersInfo()">查看Ta的信息</button>
+                    <button type="button" class="btn btn-primary" onclick="becomeFriends()">加为好友</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

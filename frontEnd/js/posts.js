@@ -142,7 +142,7 @@ function showPosts() {
                     `<div class="media card-body" style="border-bottom: solid gainsboro 1px;">
                         <img class="align-self-start mr-3 indexBox" src="images/index_box.png" >
                         <div class="media-body">
-                            <h5 class="mt-0"><a href="post.html?p=${postArr[i].id}">${postArr[i].title}</a></h5>
+                            <h5 class="mt-0"><a href="post.html?id=${postArr[i].id}&page=1&pagesize=20">${postArr[i].title}</a></h5>
                             <p>${postArr[i].content}</p>
                             <span style="font-size:10px;float:right;">发贴时间:${transformTime(postArr[i].publishtime)}</span>
                         </div>
@@ -153,7 +153,7 @@ function showPosts() {
         error: (xhr, err) => {
             alert('贴子加载失败');
         }
-    })
+    });
 
 }
 
@@ -183,7 +183,9 @@ function transformTime(timestamp = +new Date()) {
 
 
 function addPost(){
-    var para = {"title":document.getElementById('title').value,"content":document.getElementById('content').value,"publishtime":transformTime((new Date()).getTime())}
+    var title = document.getElementById('title').value;
+    var content = document.getElementById('content').value;
+    var para = {"title":title,"content":content};
     var url = globalConfig.url;
     $.ajax({
         method: 'POST',
@@ -200,7 +202,16 @@ function addPost(){
             }
         },
         error: (xhr, err) => {
-            alert('发布失败');
+            alert('发贴失败');
         }
-    })
+    });
+}
+
+
+function peekOthersInfo(){
+
+}
+
+function becomeFriends(){
+    
 }

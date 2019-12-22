@@ -75,7 +75,7 @@ function showTalkHistory(to,receiverName,receiverAvatar){
             $('#talk_div').html(talkHTML);
         },
         error: (xhr, err) => {
-            alert('贴子加载失败');
+            alert('聊天历史记录加载失败');
         }
     });
 }
@@ -114,6 +114,8 @@ function sendMessage(){
         data: para,
         success: (data) => {
             document.getElementById("inputContent").value = "";
+            var div = document.getElementById('talk_div');
+            div.scrollTop = div.scrollHeight;
             if(data.code!=200){
                 alert("发送失败");
             }
@@ -136,5 +138,5 @@ function go(fid,receiverName,receiverAvatar){
         showInputBar();
     }
     clearInterval(last);
-    last = setInterval(`showTalkHistory('${fid}','${receiverName}','${receiverAvatar}')`,1000);
+    last = setInterval(`showTalkHistory('${fid}','${receiverName}','${receiverAvatar}')`,3000);
 }

@@ -22,10 +22,15 @@ server.use(session({
     saveUninitialized: true,
     cookie: {
         secure: false,
-        maxAge: 80000
+        maxAge: 30000000
     }
 }))
 
+// const path = require('path'); //系统路径模块
+
+// let p = path.join(__dirname, '../frontEnd')
+// console.log(p)
+// server.use(express.static('E:\forum\frontEnd'));
 //自定义中间件：允许指定客户端的跨域访问
 server.use(function (req, res, next) {
     res.set('Access-Control-Allow-Origin', req.get('Origin'))
@@ -46,7 +51,6 @@ server.use(bodyParser.urlencoded({
 server.listen(port, function () {
     console.log('服务器启动成功，正在监听端口：', port)
 })
-
 
 
 /**
@@ -70,6 +74,8 @@ server.get('/friends/list', function (req, res) {
             else {
                 if (result.length > 0)
                     output = result
+                else
+                    output = []
                 let sql = 'select oneid as fid,onename as fname,oneavatar as favatar from friend where twoid=?'
                 pool.query(sql, [id], function (err, result) {
                     if (err) throw err
@@ -135,13 +141,19 @@ server.post('/post/replyto', function (req, res) {
     let directreply = req.body.directreply
     let replyto = req.body.replyto;
     let postgroup = req.body.postgroup
-    let replygroup = req.body.replygroup
     let content = req.body.content
-    if (!publishtime || !replyto || !postgroup || !replygroup) {
+    if (!publishtime || !replyto || !postgroup) {
         res.json({
             code: 100
         })
         return
+    }
+    let replygroup = 0
+    if(directreply==0){
+        replygroup = req.body.replygroup
+        if(!replygroup){
+            res.json({code:100})
+        }
     }
     //查询数据库
     let sql = 'insert into postreply values(null,?,?,?,?,?,?,?,?,?,null)'
@@ -150,11 +162,26 @@ server.post('/post/replyto', function (req, res) {
             res.json({
                 code: 0
             })
-        else
-            res.json({
-                code: 200,
-                id: result.insertId
-            })
+        else{
+            if(directreply == 1){
+                let replygroup = result.insertId
+                let sql = 'update postreply set replygroup = ? where id = ?'
+                pool.query(sql,[replygroup,replygroup],function(err,result){
+                    if(err)
+                        res.json({
+                            code:0
+                        })
+                    else
+                        res.json({
+                            code:200
+                        })
+                })
+            }else{
+                res.json({
+                    code:200
+                })
+            }
+        }
     })
 })
 
@@ -168,7 +195,6 @@ server.post('/posts/add', function (req, res) {
     // let id = "user1"
     // let nickname = "user1"
     // let avatar = "dad"
-    console.log(req.sessionID)
     if (!id) {
         res.json({
             code: 400,
@@ -178,7 +204,8 @@ server.post('/posts/add', function (req, res) {
     }
     let title = req.body.title
     let content = req.body.content
-    let publishtime = req.body.publishtime
+    //不能通过req.body.publishtime来获得时间戳，因为会自动转化为时间格式
+    let publishtime = (new Date()).getTime()
     if (!title || !content || !publishtime) {
         res.json({
             code: 100
@@ -186,17 +213,27 @@ server.post('/posts/add', function (req, res) {
         return
     }
     //查询数据库
-    let sql = 'insert into postreply values(null,?,?,?,?,-1,-1,1,-1,?,?)'
+    let sql = 'insert into postreply values(null,?,?,?,?,-1,-1,null,-1,?,?)'
     pool.query(sql, [id, nickname, avatar, publishtime, content, title], function (err, result) {
         if (err)
             res.json({
                 code: 0
             })
-        else
-            res.json({
-                code: 200,
-                id: result.insertId
+        else{
+            let sql2 = 'update postreply set postgroup=? where id = ?'
+            pool.query(sql2, [result.insertId, result.insertId],function (err,result2){
+                if(err){
+                    res.json({
+                        code: 0
+                    })
+                }else{
+                    res.json({
+                        code: 200,
+                        id: result.insertId
+                    })
+                }
             })
+        }
     })
 })
 
@@ -674,8 +711,8 @@ server.get('/post/replys', function (req, res) {
     let page = info.page
     let countload = 0
     let num = 0
-    let limit1 = (page - 1) * 5
-    let sql1 = 'select count(id) num from postreply where replygroup=? and directreply=0 limit ' + limit1 + ',5'
+    let limit1 = (page - 1) * 3
+    let sql1 = 'select count(id) num from postreply where replygroup=? and directreply=0 '
     pool.query(sql1, [replygroup], function (err, result) {
         if (err)
             throw err
@@ -685,15 +722,15 @@ server.get('/post/replys', function (req, res) {
         else
             num = result[0].num
 
-        if (num % 5 != 0)
-            output.totalPage = Math.ceil(num / 5) //向上取整
+        if (num % 3 != 0)
+            output.totalPage = Math.ceil(num / 3) //向上取整
         else
-            output.totalPage = num / 5
+            output.totalPage = num / 3
         if (countload == 2)
             res.json(output)
     })
 
-    let sql2 = 'select id,uid,nickname,avatar,publishtime,content from postreply where replygroup=? and directreply=0 limit ' + limit1 + ',5'
+    let sql2 = 'select id,uid,nickname,avatar,publishtime,content from postreply where replygroup=? and directreply=0 limit ' + limit1 + ',3'
     pool.query(sql2, [replygroup], function (err, result) {
         if (err)
             throw err
