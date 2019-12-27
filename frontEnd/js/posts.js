@@ -65,7 +65,7 @@ function queryPosts() {
                 postHTML +=
                     `
                     <div class="media card-body" style="border-bottom: solid gainsboro 1px;">
-                        <img class="align-self-start mr-3 indexBox" src="images/index_box.png" >
+                        <img class="align-self-start mr-3 indexBox" src="${'userImg/'+postArr[i].avatar}" >
                         <div class="media-body">
                             <h5 class="mt-0"><a href="post.html?id=${postArr[i].id}&p=1&pagesize=20">${postArr[i].title}</a></h5>
                             <p>${postArr[i].content}</p>
@@ -140,7 +140,7 @@ function showPosts() {
             for (let i = 0; i < postArr.length; ++i) {
                 postHTML +=
                     `<div class="media card-body" style="border-bottom: solid gainsboro 1px;">
-                        <img class="align-self-start mr-3 indexBox" src="images/index_box.png" >
+                        <img class="align-self-start mr-3 indexBox" src="${'userImg/'+postArr[i].avatar}" >
                         <div class="media-body">
                             <h5 class="mt-0"><a href="post.html?id=${postArr[i].id}&page=1&pagesize=20">${postArr[i].title}</a></h5>
                             <p>${postArr[i].content}</p>
@@ -208,10 +208,28 @@ function addPost(){
 }
 
 
-function peekOthersInfo(){
-
-}
-
-function becomeFriends(){
-    
+function sessionCheck(){
+    var url = globalConfig.url;
+    $.ajax({
+        method: 'GET',
+        xhrFields:{
+            withCredentials:true
+        },
+        url: `http://${url}/session/check`,
+        success: (data) => {
+            if(data.code==0){
+                alert('好像还没登录呢，先去登录吧');
+                window.location.href = "login.html";
+            }else{
+                if (window.location.href.indexOf("k") == -1) {
+                    $(window).on('load',showPosts());
+                } else {
+                    $(window).on('load',queryPosts());
+                }
+            }
+        },
+        error: (xhr, err) => {
+            alert('用户登录校验失败');
+        }
+    });
 }

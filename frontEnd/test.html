@@ -11,6 +11,22 @@
   <script src="webDefault/jquery-3.4.1.min.js"></script>
   <script src="webDefault/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="css/index.css">
+  <style>
+    .file-box {
+            position: relative;
+            display: inline-block;
+            width:100px;
+            height:100px;
+            background:url('images/uploadPc.png')no-repeat;
+            background-size:100px 100px;
+        }
+        #input_file{
+            width:100%;
+            height:100%;
+            opacity: 0;
+            filter:alpha(opacity=0);
+        }
+  </style>
 </head>
 
 <body>
@@ -129,25 +145,59 @@
     </div>
     <img id="img-box">
 
+    <!-- <div class="input-group mb-3"> -->
+      <div class="custom-file">
+          <input type="file" class="custom-file-input" id="inputGroupFile02" onclick="alert('good')"/>
+          <label class="custom-file-label" for="inputGroupFile02" id ="filename"></label>
+      </div>
+  <!-- </div> -->
+
+
+  <div class="file-box" style="border: red solid;">
+    <input type="file" value="" name="file" id = "input_file"
+       accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" οnchange="imgPreview(this,0)" >
+</div>
 
 
   </div>
 
 
-  <div class="talk_con">
-    <div class="talk_show" id="words">
-    </div>
-    <div class="talk_input">
-        <span class="whotalk" id="who">聊天内容：
-        </span>
-        <input type="text" class="talk_word" id="talkwords">
-        <button class="btn btn-primary" id="talksub" onclick="sendmsg()">发送</button>
-    </div>
-</div>
-
-
 </body>
 <script>
+  function imgPreview(fileDom,i) {
+        //判断是否支持FileReader
+        if(window.FileReader) {
+            var reader = new FileReader();
+        } else {
+            alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+        }
+        //获取文件
+        var file = fileDom.files[0];
+        var imageType = /^image\//;
+        //是否是图片
+        if(!imageType.test(file.type)) {
+            alert("请选择图片！");
+            return;
+        }
+        //读取完成
+        reader.onload = function(e) {
+            //图片路径设置为读取的图片
+            // img.src = e.target.result;
+            console.log(document.getElementsByClassName('file-box'));
+            document.getElementsByClassName('file-box')[i].style.background = "url("+e.target.result+")no-repeat";//回显图片
+            document.getElementsByClassName('file-box')[i].style.backgroundSize = '200px 160px';
+            console.log('reader',reader)
+        };
+        reader.readAsDataURL(file);
+    }
+
+    $('#inputGroupFile02').on('change', function () {
+      var fileName = $(this).val();
+      var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
+      $(this).next('.custom-file-label').html(cleanFileName);
+  })
+
+
   window.onload = function () {
     var input = document.getElementById("uploadfile");
     var div;

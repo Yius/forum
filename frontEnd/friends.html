@@ -19,7 +19,7 @@
     <![endif]-->
 </head>
 
-<body class="background">
+<body class="background" style="opacity:0.9;" >
 
   <div id="data" style="display: none;"></div>
 
@@ -27,15 +27,15 @@
   </div>
 
   <div style="width: 50%;height: 620px;float: left;margin-top: 4%;">
-    <div id="talk_div" style="height: 570px;width: 100%;border-bottom:solid gainsboro;border-top: solid gainsboro;border-right: solid gainsboro;border-radius: 5px;overflow-y: scroll;">
+    <div id="talk_div" style="background-color: white; height: 570px;width: 100%;border-bottom:solid gainsboro;border-top: solid gainsboro;border-right: solid gainsboro;border-radius: 5px;overflow-y: scroll;">
     </div>
-    <div id="send_div" style="height: 50px; border-bottom: solid gainsboro;border-right:solid gainsboro;border-radius: 5px;">
+    <div id="send_div" style="background-color: white;height: 50px; border-bottom: solid gainsboro;border-right:solid gainsboro;border-radius: 5px;">
   </div>
 </div>
 
 
 </body>
 <script>
-  $(window).load(getFriends());
+  $(window).on('load',sessionCheck());
 </script>
 </html>

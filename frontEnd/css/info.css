@@ -1,0 +1,337 @@
+
+.background {
+    background: url("../images/bg5.png") no-repeat center;
+    background-size: cover;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+	-ms-background-size: cover;
+}
+input:focus,textarea:focus,select:focus{
+	outline: none;
+}
+.info_input{
+	width: 300px;
+	height: 30px;
+	font-size: 18px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    margin-bottom: 16px;
+    float: right;
+}
+.info_input::placeholder{
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 18px;
+}
+.info_label{
+    color: #fff;
+    float: left;
+    font-size: 18px;
+    margin:8px 0 8px 20px;
+}
+.info_textarea{
+    width: 300px;
+	height: 100px;
+	font-size: 18px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    float: right;
+    resize:none;
+    margin-bottom: 20px;
+}
+.btn_c{
+	width:90px;
+	height: 35px;
+	border: 1px solid #fff;
+    background: none;
+	font-size:14px;
+	color: #fff;
+    cursor: pointer;
+    margin-top: 25px;
+    transition: .25s;
+    border-radius: 20px;
+}
+.btn_c:hover{
+    background: rgba(255,255,255,.50);
+}
+.login_wrap{
+    width: 980px;
+    min-height: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 120px rgba(0, 0, 0, 0.45);
+    background-color: rgba(255, 255, 255, 0.35);
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    margin-top: -250px;
+    margin-right: -490px;
+}
+.header-left {
+	padding: 3em;
+	float: left;
+	width: 49%;
+}
+.header-right {
+	padding-left: 3em;
+	float: right;
+	width: 50%;
+	padding: 2em;
+}
+.header-left img {
+    width: 100%;
+     margin-top: 19px;
+}
+.header-right {
+    padding-left: 3em;
+}
+.header-right h2 {
+    font-size: 2.4em;
+    color: #fff;
+    margin:0.4em 0 0.4em 0;
+}
+/* 模态框 */
+.m_input{
+    width: 300px;
+	height: 30px;
+	font-size: 18px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    margin-top: 10px;
+}
+.m_input::placeholder,.m_textarea::placeholder{
+    color: #fff;
+    font-size: 18px;
+}
+.m_h4{
+    color:#fff;
+    font-size: 25px;
+}
+.m_dialog{
+    height: 520px;
+    border-radius: 36px;
+    align-items: center;
+    background-color: rgba(143, 154, 172, 0.78);
+}
+.m_select{
+    width: 300px;
+	height: 30px;
+	font-size: 18px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
+.m_select option{
+    background-color: rgba(43, 67, 107, 0.6);
+}
+.m_textarea{
+    width: 300px;
+	height: 120px;
+	font-size: 18px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    resize: none;
+}
+input[type="date"]::-webkit-inner-spin-button {
+    visibility: hidden;
+}
+input[type="date"]::-webkit-calendar-picker-indicator{
+    color: #fff;
+    background: none;
+    
+}
+.btn_m{
+	width:80px;
+	height: 35px;
+	border: 1px solid #fff;
+    background: none;
+	font-size:14px;
+	color: #fff;
+    cursor: pointer;
+    margin-top: 0px;
+    transition: .25s;
+    border-radius: 20px;
+}
+.btn_m:hover{
+    background: rgba(255,255,255,.50);
+}
+.custom-file-label{
+    border-radius: 18px;
+    color: #fff;
+    background: none;
+    cursor: pointer;
+}
+.custom-file-label::after{
+    cursor: pointer;
+    background: none;
+    color: #fff;
+}
+.custom-file-input:lang(zh) ~ .custom-file-label::after {
+    content: "浏览";
+  }
+   
+.custom-file-label::after {
+    content: "浏览";
+}
+p{
+    font-size: 14px;
+    color: red;
+}
+/* 导航栏 */
+nav{
+    width: 540px;
+    margin: 0px auto;
+}
+.nav_div{
+    text-align: center;
+}
+.nav_ul{
+    display: flex;
+}
+.nav_ul li{
+    list-style: none;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+.nav_ul li a{
+    color: #fff;
+    font-size: 30px;
+}
+.nav_ul li:hover{
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: 0.75s;
+}
+/* 响应式 */
+@media(max-width:1000px){
+
+    .header-left {
+        padding: 1.5em;
+        float: left;
+        width: 45%;
+    }
+    .header-right {
+        padding-left: 2.5em;
+        float: right;
+        width: 55%;
+        padding: 2em;
+    }
+    .login_wrap{
+        width: 700px;
+        margin-right: -350px;
+        margin-top: -320px;
+    }
+    .header-right h2 {
+        font-size: 2em;
+    }
+    .btn_c{
+        margin-top:16px;
+    }
+    
+}
+
+@media(max-width:720px){ 
+    .header-left {
+        padding: 1.5em;
+        float: left;
+        width: 35%;
+    }
+    .header-right {
+        padding: 1.5em;
+        float: right;
+        width: 65%;
+        padding: 2em;
+    }
+    .login_wrap{
+        width: 480px;
+        margin-right: -240px;
+        margin-top: -320px;
+    }
+    .btn_c{
+        width:75px;
+        font-size:8px;
+        height: 35px;
+        margin: 9px 15px 5px 0;
+    }
+    .header-right h2 {
+        font-size: 1.5em;
+    }
+    .info_input,.info_textarea{
+        width: 250px;
+        font-size: 16px;
+    }
+    .nav_ul li a{
+        font-size: 24px;
+    }
+    nav{
+        width: 470px;
+        margin: 0px auto;
+    }
+}
+@media(max-width:500px){
+  	.header-right {
+        padding-left:0em;
+        float: right;
+        width: 100%;
+        padding: 1em 1em 0em 1em;
+    }
+    .header-right h1 {
+        font-size: 1em;
+        padding: .4em 1em;
+    }
+    .header-left {
+        padding: 0em 1em 1em 1em;
+        float: left;
+        width: 100%;
+    }
+    .header-left img {
+        width: 100%;
+        margin-top: 3px;
+    }
+    .login_wrap{
+        width: 360px;
+        margin-right: -180px;
+        margin-top: -420px;
+        top: 63%;
+        height: 700px;
+    }
+    .btn_c{
+        width:80px;
+        font-size:8px;
+        height: 30px;
+        margin:9px 5px 5px 0;
+    }
+    .info_input{
+        font-size: 15px;
+    }
+    .info_label{
+        font-size: 15px;
+        margin: 10px 0 10px 10px;
+    }
+    .nav_ul li a{
+        font-size: 18px;
+    }
+    nav{
+        width: 360px;
+    }
+}
+@media(max-width:375px){
+    .header-left {
+        float: left;
+        width: 100%;
+    }
+  	.header-right {
+        padding-left: 0em;
+        float: right;
+        width: 100%;
+        padding: 0.5em 0.5em 0em 0.5em;
+    }
+}

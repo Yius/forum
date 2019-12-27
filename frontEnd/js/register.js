@@ -9,9 +9,9 @@ function registerHelp(){
             gender = choices[i].value;
         }
     }
-    var defaultAvatar = "userImg/default-boy.jpg";
+    var defaultAvatar = "default-boy.jpg";
     if(gender==="F"){
-        defaultAvatar = "userImg/default-girl.jpg";
+        defaultAvatar = "default-girl.jpg";
     }
     para = { "id": document.getElementById("id").value, "password": document.getElementById("password").value ,
                 "nickname":document.getElementById("nickname").value,"bornyear":year,"description":document.getElementById("description").value,

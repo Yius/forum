@@ -1,20 +1,34 @@
 let mysql = require('mysql')
 let pool = mysql.createPool({
-    host: '127.0.0.1',
+    host: '10.252.9.88',
     port: '3306',
     user: 'root',
-    password: 'demaxiya08',
-    database: 'forum',
-    connectTimeout: 10
+    password: '123456',
+    database: 'forum'
+    // connectTimeout: 10
 })
 
 var URL = require('url');
 let session = require('express-session')
 var bodyParser = require('body-parser');
 let express = require('express')
+let multer = require('multer')
+let fs = require('fs')
 let server = express()
 let port = 5050
-
+let storage = multer.diskStorage({
+    destination:function(req,file,cb){
+        if(req.session.uid)
+            cb(null,"../frontEnd/userImg");
+    },
+    filename:function(req,file,cb){
+        if(req.session.uid)
+            cb(null,req.session.uid+'.'+file.originalname.substring(file.originalname.indexOf(".")+1));
+    }
+});
+let upload = multer({
+    storage:storage
+}).single('avatar');
 
 server.use(session({
     secret: "this is a string key",
@@ -149,10 +163,10 @@ server.post('/post/replyto', function (req, res) {
         return
     }
     let replygroup = 0
-    if(directreply==0){
+    if (directreply == 0) {
         replygroup = req.body.replygroup
-        if(!replygroup){
-            res.json({code:100})
+        if (!replygroup) {
+            res.json({ code: 100 })
         }
     }
     //查询数据库
@@ -162,23 +176,23 @@ server.post('/post/replyto', function (req, res) {
             res.json({
                 code: 0
             })
-        else{
-            if(directreply == 1){
+        else {
+            if (directreply == 1) {
                 let replygroup = result.insertId
                 let sql = 'update postreply set replygroup = ? where id = ?'
-                pool.query(sql,[replygroup,replygroup],function(err,result){
-                    if(err)
+                pool.query(sql, [replygroup, replygroup], function (err, result) {
+                    if (err)
                         res.json({
-                            code:0
+                            code: 0
                         })
                     else
                         res.json({
-                            code:200
+                            code: 200
                         })
                 })
-            }else{
+            } else {
                 res.json({
-                    code:200
+                    code: 200
                 })
             }
         }
@@ -205,7 +219,7 @@ server.post('/posts/add', function (req, res) {
     let title = req.body.title
     let content = req.body.content
     //不能通过req.body.publishtime来获得时间戳，因为会自动转化为时间格式
-    let publishtime = (new Date()).getTime()
+    let publishtime = (new Date()).getTime()
     if (!title || !content || !publishtime) {
         res.json({
             code: 100
@@ -219,14 +233,14 @@ server.post('/posts/add', function (req, res) {
             res.json({
                 code: 0
             })
-        else{
+        else {
             let sql2 = 'update postreply set postgroup=? where id = ?'
-            pool.query(sql2, [result.insertId, result.insertId],function (err,result2){
-                if(err){
+            pool.query(sql2, [result.insertId, result.insertId], function (err, result2) {
+                if (err) {
                     res.json({
                         code: 0
                     })
-                }else{
+                } else {
                     res.json({
                         code: 200,
                         id: result.insertId
@@ -240,15 +254,12 @@ server.post('/posts/add', function (req, res) {
 /**
  * API 5、修改信息
  */
-server.post('/info/alter', function (req, res) {
+server.post('/info/alter',function(req,res){
     let id = req.session.uid
     console.log(id)
     // let id = "user1"
-    if (!id) {
-        res.json({
-            code: 400,
-            msg: 'no logged in'
-        })
+    if(!id){
+        res.json({code:400,msg:'no logged in'})
         return
     }
     let password = req.body.password
@@ -256,30 +267,25 @@ server.post('/info/alter', function (req, res) {
     let gender = req.body.gender
     let bornyear = req.body.bornyear
     let description = req.body.description
-    if (!password || !nickname || !gender || !bornyear || !description) {
-        res.json({
-            code: 100
-        })
+    if(!password||!nickname||!gender||!bornyear||!description){
+        res.json({code:100})
         return
     }
-    if (password == "" || nickname == "" || gender == "" || description == "") {
-        res.json({
-            code: 500,
-            msg: 'can not be empty'
-        })
-        return
-    }
+    if(password=="")
+        password = req.session.password
+    if(nickname=="")
+        nickname = req.session.nickname
+    if(gender=="")
+        gender = req.session.gender
+    if(description=="")
+        description = req.session.description
     //查询数据库
     let sql = 'update user set password=?,nickname=?,gender=?,bornyear=?,description=? where id=?'
-    pool.query(sql, [password, nickname, gender, bornyear, description, id], function (err, result) {
-        if (err)
-            res.json({
-                code: 0
-            })
+    pool.query(sql,[password,nickname,gender,bornyear,description,id],function(err,result){
+        if(err)
+            res.json({code:0})
         else
-            res.json({
-                code: 200
-            })
+            res.json({code:200})
     })
 })
 
@@ -383,60 +389,48 @@ server.post('/login', function (req, res) {
 })
 
 /**
- * 8、建立好友关系
- */
+ * 8、建立好友关系
+ */
 server.get('/friends/add', function (req, res) {
     let oneid = req.session.uid;
     let onename = req.session.nickname
     let oneavatar = req.session.avatar
     if (!oneid) {
-        res.json({
-            code: 400,
-            msg: 'no logged in'
-        })
+        res.json({ code: 400, msg: 'no logged in' })
         return
     }
     let twoid = req.query.twoid
     if (!twoid) {
-        res.json({
-            code: 100
-        })
+        res.json({ code: 100 })
         return
     }
     if (oneid == "" || twoid == "") {
-        res.json({
-            code: 500,
-            msg: 'can not be empty'
-        })
+        res.json({ code: 500, msg: 'can not be empty' })
         return
     }
-    let sql = 'select * from friend where (oneid=? and twoid=?) or (oneid=? and twoid=?)'
+    if (oneid == twoid) {
+        res.json({ code: 300, msg: 'not add yourself as a friend' });
+    }
+    let sql = 'select * from friend where (oneid like ? and twoid like ?) or (oneid like ? and twoid like?);'
     pool.query(sql, [oneid, twoid, twoid, oneid], function (err, result) {
         if (err) throw err
         else {
             if (result.length > 0) {
-                res.json({
-                    code: 0,
-                    msg: 'friend has been added'
-                })
+                res.json({ code: 0, msg: 'friend has been added' })
             } else {
-                let sql = 'select * from user where id = ?'
+                let sql = 'select * from user where id = ?'
                 pool.query(sql, [twoid], function (err, result) {
                     if (err) throw err
                     else {
                         if (result.length > 0) {
                             let twoname = result[0].nickname
                             let twoavatar = result[0].avatar
-                            let sql = 'insert into friend values(null,?,?,?,?,?,?)'
+                            let sql = 'insert into friend values(null,?,?,?,?,?,?)'
                             pool.query(sql, [oneid, twoid, onename, twoname, oneavatar, twoavatar], function (err, result) {
                                 if (err)
-                                    res.json({
-                                        code: 0
-                                    })
+                                    res.json({ code: 0 })
                                 else {
-                                    res.json({
-                                        code: 200
-                                    })
+                                    res.json({ code: 200 })
                                 }
                             })
                         }
@@ -471,18 +465,10 @@ server.get('/user/logout', function (req, res) {
 /**
  * 10、检查是否已登录
  */
-server.get('/islogin', function (req, res) {
+server.get('/session/check', function (req, res) {
     if (req.session.uid) {
-        let user = {}
-        user.id = req.session.uid
-        user.password = req.session.password
-        user.nickname = req.session.nickname
-        user.gender = req.session.gender
-        user.description = req.session.description
-        user.avatar = req.session.avatar
         res.json({
             code: 200,
-            user: user
         })
     } else {
         res.json({
@@ -528,7 +514,7 @@ server.get('/posts/list', function (req, res) {
     })
 
     //查询帖子信息output.post
-    let sql2 = 'select id,title,content,publishtime from postreply where directreply=-1 order by publishtime limit ' + limit1 + ',' + pagesize
+    let sql2 = 'select id,title,content,publishtime,avatar from postreply where directreply=-1 order by publishtime desc limit ' + limit1 + ',' + pagesize
     pool.query(sql2, function (err, result) {
         if (err)
             throw err
@@ -815,31 +801,64 @@ server.get('/posts/search', function (req, res) {
 /**
  * API 16、获取个人信息
  */
-server.get('/info/mine', function (req, res) {
-    let output = {
-        id: {},
-        nickname: {},
-        gender: {},
-        age: {},
-        description: {},
-        avatar: {}
-    }
-    let id = req.query.id
-    let sql = "select * from user where id=?"
-    pool.query(sql, [id], function (err, result) {
-        if (err)
-            throw err
-        if (result.length > 0) {
-            var dataString = JSON.stringify(result[0])
-            var data = JSON.parse(dataString)
-            output = data
-            res.json(output)
-        } else {
-            res.json({})
-        }
-    })
+server.get("/info/peek", function (req, res) {
+    let output={}
+        let id=req.query.id
+        if(!id)
+            id=req.session.uid
+        let sql="select id,nickname,gender,bornyear,description,avatar from user where id = ?"
+        pool.query(sql,[id],function(err,result){
+            if(err)
+                throw err
+            output.id=result[0].id
+            output.nickname=result[0].nickname
+            output.gender=result[0].gender
+            output.bornyear=result[0].bornyear
+            output.description=result[0].description
+            output.avatar = result[0].avatar
+            res.json(output)
+        })
 })
 
 /**
- * API 16、获取个人信息
+ * 
  */
+server.post('/upload/img',function(req,res){
+    upload(req,res,function(err){
+        if(err){
+            res.json({code:0})
+            return
+        }
+        let id = req.session.uid;
+        if(!id){
+            res.json({code:400,msg:'no logged in'})
+            return
+        }
+        let avatar = req.file.filename
+        if(!avatar){
+            res.json({code:0})
+            return
+        }
+        let sql = 'update user set avatar=? where id =?'
+        pool.query(sql,[avatar,id],function(err,reuslt){
+            if(err){
+                res.json({code:0})
+            }else{
+                let avatar_p = req.session.avatar
+                req.session.avatar = avatar
+                if(avatar.toLowerCase()!=avatar_p.toLowerCase()){
+                    fs.unlink('../frontEnd/userImg/'+avatar_p,function(err){
+                        if(err){
+                            res.json({code:200,avatar:avatar,msg:'Failed to delete previous picture'})
+                            return false
+                        }else{
+                            res.json({code:200,avatar:avatar})
+                        }
+                    })
+                }else{
+                    res.json({code:200,avatar:avatar})
+                }
+            }
+        })
+    });
+});

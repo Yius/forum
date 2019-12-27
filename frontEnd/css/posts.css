@@ -2,3 +2,13 @@
     width: 60px;
     height: 60px;
 }
+
+.background {
+    background: url("../images/bg3.jpg") no-repeat center;
+    background-size: cover;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+	-ms-background-size: cover;
+}

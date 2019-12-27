@@ -18,7 +18,7 @@
     <![endif]-->
 </head>
 
-<body class="background">
+<body class="background" style="opacity:0.9;">
   <div class="container">
     <nav class="navbar navbar-expand navbar-light" style="margin-top: 2%;;background-color: #e3f2fd;">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -80,7 +80,7 @@
                   你好像对这名用户感兴趣哦~
               </div>
               <div class="modal-footer">
-                  <button type="button" style="margin-right: 50%;" class="btn btn-primary" onclick="peekOthersInfo()">查看Ta的信息</button>
+                  <button type="button" style="margin-right: 50%;" class="btn btn-primary" onclick="window.parent.location.href=`info.html?id=${$('#interestsUserIDDiv').attr('data-field')}`;">查看Ta的信息</button>
                   <button type="button" class="btn btn-primary" onclick="becomeFriends()">加为好友</button>
               </div>
           </div>
@@ -89,7 +89,7 @@
 
   </div>
   <script>
-    $(window).on('load',showPostDetail());
+    $(window).on('load',sessionCheck());
   </script>
   <script>
     //不能将logOut()写在js文件夹内，原因我推测是nav-link在搞鬼

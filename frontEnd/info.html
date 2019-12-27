@@ -1,22 +1,157 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>个人信息</title>
-    <link href="webDefault/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/info.css" rel="stylesheet" />
-    <script src="webDefault/jquery-3.4.1.min.js"></script>
-    <script src="webDefault/bootstrap.bundle.min.js"></script>
-    <script src="js/info.js"></script>
-    <script src="js/config.js"></script>
-    <!--[if lt IE 9]>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>个人信息</title>
+  <link href="webDefault/bootstrap.min.css" rel="stylesheet" />
+  <link href="css/info.css" rel="stylesheet" />
+  <script src="webDefault/jquery-3.4.1.min.js"></script>
+  <script src="webDefault/bootstrap.bundle.min.js"></script>
+  <script src="js/info.js"></script>
+  <script src="js/config.js"></script>
+  <!--[if lt IE 9]>
       <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <![endif]-->
 </head>
+
 <body class="background">
-    
+  <nav>
+    <div class="nav_div">
+      <ul class="nav_ul">
+        <li>
+          <a class="nav-link" href="posts.html?p=1">帖子列表</a>
+        </li>
+        <li>
+          <a class="nav-link" href="friends.html">好友列表</a>
+        </li>
+        <li>
+          <a class="nav-link" href="javascript:void(0)" onclick="logOut()">退出登录</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- 个人 -->
+  <div class="login_wrap">
+    <div class="col-md-5 header-left">
+      <!--头像框-->
+      <img id="head">
+    </div>
+    <div class="col-md-7 header-right">
+      <div style="display: flex;">
+        <h2>个人中心</h2>
+        &nbsp;&nbsp;&nbsp;&nbsp;<button type="button" id="change" class="btn btn_c" data-toggle="modal"
+          data-target="#info_change">修改信息</button>
+      </div>
+      <form>
+        <div>
+          <label class="info_label" for="">账号</label>
+          <input id="id" type="text" class="info_input" disabled="disabled">
+        </div>
+        <div>
+          <label class="info_label" for="">昵称</label>
+          <input id="nickname" class="info_input" type="text" disabled="disabled">
+        </div>
+        <div>
+          <label class="info_label" for="">性别</label>
+          <input id="sex" class="info_input" type="text" disabled="disabled">
+        </div>
+        <div>
+          <label class="info_label" for="">出生年份</label>
+          <input id="bornyear" class="info_input" type="text" disabled="disabled">
+        </div>
+        <div>
+          <label class="info_label" for="">个人简介</label>
+          <textarea id="description" class="info_textarea" rows="3" type="text" readonly="readonly"
+            maxlength="50"></textarea>
+        </div>
+      </form>
+    </div>
+
+    <div class="clearfix"> </div>
+
+  </div>
+  <!-- 模态框 -->
+  <div class="modal fade" id="info_change" style="background-color: rgba(0, 0, 0, 0.4);" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content m_dialog">
+        <div class="modal-header" style="border: none;">
+          <h4 class="m_h4 modal-title">修改个人信息</h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="custom-file">
+              <input type="file" accept="image/*" class="custom-file-input" id="change_head" name="avatar">
+              <label class="custom-file-label" for="change_head" id="filename"></label>
+            </div>
+            <div>
+              <input class="m_input" type="text" id="change_nickname" placeholder="请输入修改的昵称">
+            </div>
+            <div>
+              <input class="m_input" type="text" id="change_password" placeholder="请输入修改的密码">
+            </div>
+            <div>
+              <input class="m_input" type="date" id="change_bornyear" placeholder="请输入修改出生日期">
+            </div>
+            <div>
+              <select class="m_select" id="change_sex">
+                <option name="sexChoices" value=""></option>
+                <option name="sexChoices" value="M">男</option>
+                <option name="sexChoices" value="F">女</option>
+              </select>
+            </div>
+            <div>
+              <textarea class="m_textarea" id="change_description" maxlength="50"
+                placeholder="请输入修改的个人介绍(限50字)"></textarea>
+            </div>
+            <p><b>注:只需改动要修改的地方</b></p>
+          </form>
+        </div>
+        <div class="modal-footer" style="border: none;">
+          <button type="button" class="btn btn_m" onclick="alterInfo()">修改</button>
+          <button type="button" class="btn btn_m" data-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
+<script>
+  $(window).on('load', init());
+  //图片地址回显
+  $('#change_head').on('change', function () {
+    var fileName = $(this).val();
+    var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
+    $(this).next('.custom-file-label').html(cleanFileName);
+    uploadImg();
+  })
+</script>
+<script>
+  //不能将logOut()写在js文件夹内，原因我推测是nav-link在搞鬼
+  function logOut() {
+    var url = globalConfig.url;
+    $.ajax({
+      method: 'GET',
+      xhrFields: {
+        withCredentials: true
+      },
+      url: `http://${url}/user/logout`,
+      success: (data) => {
+        if (data.code == 200) {
+          alert('您已成功退出登录，即将跳转到首页');
+          window.location.href = "index.html";
+        } else {
+          alert('未知原因，退出失败');
+        }
+      },
+      error: (xhr, err) => {
+        alert('退出失败');
+      }
+    })
+  }
+</script>
+
 </html>

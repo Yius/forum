@@ -67,8 +67,8 @@ function showPostDetail() {
                 </nav>`;
                 postHTML +=
                 `<div class="media card-body" style="border-bottom: solid gainsboro 1px;">
-                    <div>
-                        <img class="align-self-start mr-5 avatarBox " src="images/index_box.png">
+                    <div onclick="infoInjectAndShowModal(${data.topPost.uid})">
+                        <img class="align-self-start mr-5 avatarBox " src="${'userImg/'+data.topPost.avatar}">
                         <br>
                         <p style="margin-top: 5%;text-align: center;padding-right: 3em;">${data.topPost.nickname}</p>
                     </div>
@@ -87,8 +87,8 @@ function showPostDetail() {
                 for (let i = 0; i < postArr.length; ++i) {
                     postHTML +=
                         `<div class="media card-body" style="border-bottom: solid gainsboro 1px;">
-                            <div>
-                                <img class="align-self-start mr-4 avatarBox " src="images/index_box.png">
+                            <div onclick="infoInjectAndShowModal(${postArr[i].uid})">
+                                <img class="align-self-start mr-4 avatarBox " src="${'userImg/'+postArr[i].avatar}">
                                 <br>
                                 <p style="margin-top: 5%;text-align: center;padding-right: 2em;" id="name${postArr[i].id}">${postArr[i].nickname}</p>
                             </div>
@@ -135,7 +135,7 @@ function showReplys(replygroup,page){
                 postHTML +=
                     `<div class="media card-body" style="border-bottom: solid gainsboro 1px;">
                         <div>
-                        <img class="align-self-start mr-4 avatarBox " src="images/index_box.png">
+                        <img class="align-self-start mr-4 avatarBox " src="${'userImg/'+postArr[i].avatar}">
                         <br>
                         <p style="margin-top: 5%;text-align: center;padding-right: 2em;" id="name${postArr[i].id}">${postArr[i].nickname}</p>
                         </div>
@@ -335,4 +335,58 @@ function innerReplyToOthersHelper(replygroup,replyto){
     $('#innerReplyToOthersDiv').attr('data-field',replyto);
     //注意，两个div不可以重id
     $(`#ccc${replygroup}`).collapse('show');
+}
+
+function infoInjectAndShowModal(id){
+    $('#interestsUserIDDiv').attr('data-field',id);
+    $('#infoModal').modal('show');
+}
+
+function becomeFriends(){
+    $('#infoModal').modal('hide');
+    var url = globalConfig.url;
+    var twoid = $('#interestsUserIDDiv').attr('data-field');
+    var para = {"twoid":twoid};
+    $.ajax({
+        method: 'GET',
+        xhrFields:{
+            withCredentials:true
+        },
+        url: `http://${url}/friends/add`,
+        data: para,
+        success: (data) => { 
+            if(data.code==200){
+                alert('添加成功！');
+                location.reload();
+            }else{
+                alert('你好像已经加过Ta了哦');
+            }
+        },
+        error: (xhr, err) => {
+            alert('未知原因，添加失败');
+        }
+    });
+}
+
+
+function sessionCheck(){
+    var url = globalConfig.url;
+    $.ajax({
+        method: 'GET',
+        xhrFields:{
+            withCredentials:true
+        },
+        url: `http://${url}/session/check`,
+        success: (data) => {
+            if(data.code==0){
+                alert('好像还没登录呢，先去登录吧');
+                window.location.href = "login.html";
+            }else{
+                showPostDetail();
+            }
+        },
+        error: (xhr, err) => {
+            alert('用户登录校验失败');
+        }
+    });
 }
