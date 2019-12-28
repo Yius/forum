@@ -2,3 +2,5 @@ forum.sql中包含了建表语句和数据
 backEnd文件夹下的main.js是后台处理程序的主要入口
 frontEnd文件夹下的images文件夹中存放的是所有背景图，userImg文件夹中存放的是用户的头像，其中default-boy和default-girl是两张默认头像，
 webDefault文件夹下是用到的js、css库
+此外，由于本项目未部署到云上，所以如需本地部署请在frontEnd文件夹下的js文件夹下的config.js中修改main.js的监听url，
+同时在backEnd文件夹下的main.js中修改mysql的的地址和密码，用户名等信息。
