@@ -16,8 +16,8 @@ function getFriends(){
             </nav>`;
             for(let i=0;i<data.length;++i){
                 friendsHTML +=
-                `<div onclick="go('${data[i].fid}','${data[i].fname}','${"../userImg/"+data[i].favatar}')" class="media card-body" style="border-bottom: solid gainsboro 1px;height: 90px">
-                    <img style="margin-top: -12px;" class="align-self-start mr-4 avatarBox img-thumbnail" src="${'../userImg/'+data[i].favatar}">
+                `<div tabindex="${i+1}" onclick="go('${data[i].fid}','${data[i].fname}','${data[i].favatar}')" class="media card-body" style="border-bottom: solid gainsboro 1px;height: 90px">
+                    <img style="margin-top: -12px;" class="align-self-start mr-4 avatarBox img-thumbnail" src="${'userImg/'+data[i].favatar}">
                     <div class="media-body" style="margin-top: -20px;">
                         <br>
                         <p class="nameFont">${data[i].fname}</p>
@@ -58,12 +58,12 @@ function showTalkHistory(to,receiverName,receiverAvatar){
                     `<div class="rightTalkDiv">
                         <div class="right_bubble" style="margin-left: -500%;margin-top: 5%;word-break: break-all;width: 435%;">
                             ${data[i].content}</div>
-                        <img src="${'../userImg/'+data[i].avatar}" class="rightTalkAvatar">
+                        <img src="${'userImg/'+data[i].senderavatar}" class="rightTalkAvatar">
                     </div>`;
                 }else{
                     talkHTML +=
                     `<div class="leftTalkDiv">
-                        <img src="${'../userImg/'+data[i].avatar}" class="talkAvatar">
+                        <img src="${'userImg/'+data[i].senderavatar}" class="talkAvatar">
                         <div class="bubble" style="margin-top: 0.5%; margin-left: 14%;word-break: break-all;width: 32%;">
                             ${data[i].content}</div>
                     </div>`;
@@ -138,7 +138,7 @@ function go(fid,receiverName,receiverAvatar){
         showInputBar();
     }
     clearInterval(last);
-    last = setInterval(`showTalkHistory('${fid}','${receiverName}','${receiverAvatar}')`,3000);
+    last = setInterval(`showTalkHistory('${fid}','${receiverName}','${receiverAvatar}')`,1000);
 }
 
 

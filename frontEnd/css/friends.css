@@ -68,7 +68,7 @@
     display: block;
     border: 1px solid;
     border-radius: 4px;
-    padding: 2px;
+    padding: 8px;
 }
 
 .right_bubble::before {
@@ -133,7 +133,7 @@
     display: block;
     border: 1px solid;
     border-radius: 4px;
-    padding: 2px;
+    padding: 8px;
 }
 
 
@@ -187,4 +187,9 @@
     margin-top: 9px;
     width: 80%;
     border-radius: 3px;
+}
+
+
+.selectedBox{
+    background-color: #d8e3e7;
 }

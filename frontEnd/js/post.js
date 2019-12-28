@@ -1,10 +1,10 @@
 function showPostDetail() {
     var url = globalConfig.url;
-    var curCul = location.href.substring(location.href.indexOf("?"));
+    var curCul = location.href.substring(location.href.indexOf("?")+1);
     var start = curCul.indexOf("=") + 1;
     var end = curCul.indexOf("&");
     var id = parseInt(curCul.substring(start, end))
-    var pstart = curCul.indexOf("page") + 5;
+    var pstart = curCul.indexOf("p") + 2;
     var pend = curCul.lastIndexOf("&");
     var currentPage = parseInt(curCul.substring(pstart, pend));
     var pagesize = 20;
@@ -28,25 +28,25 @@ function showPostDetail() {
             if (totalPage <= 10) {
                 for (let i = 1; i <= totalPage; ++i) {
                     if (currentPage == i) {
-                        pageHTML += `<li class="page-item active"><a class="page-link" href="post.html?id=${id}&page=${i}&pagesize=${pagesize}">${i}</a></li>`
+                        pageHTML += `<li class="page-item active"><a class="page-link" href="post.html?id=${id}&p=${i}&pagesize=${pagesize}">${i}</a></li>`
                     } else {
-                        pageHTML += `<li class="page-item"><a class="page-link" href="post.html?id=${id}&page=${i}&pagesize=${pagesize}">${i}</a></li>`
+                        pageHTML += `<li class="page-item"><a class="page-link" href="post.html?id=${id}&p=${i}&pagesize=${pagesize}">${i}</a></li>`
                     }
                 }
             } else if (currentPage + 4 >= totalPage) {
                 for (let i = totalPage - 9; i <= totalPage; ++i) {
                     if (currentPage == i) {
-                        pageHTML += `<li class="page-item active"><a class="page-link" href="post.html?id=${id}&page=${i}&pagesize=${pagesize}">${i}</a></li>`
+                        pageHTML += `<li class="page-item active"><a class="page-link" href="post.html?id=${id}&p=${i}&pagesize=${pagesize}">${i}</a></li>`
                     } else {
-                        pageHTML += `<li class="page-item"><a class="page-link" href="post.html?id=${id}&page=${i}&pagesize=${pagesize}">${i}</a></li>`
+                        pageHTML += `<li class="page-item"><a class="page-link" href="post.html?id=${id}&p=${i}&pagesize=${pagesize}">${i}</a></li>`
                     }
                 }
             } else {
                 for (let i = currentPage - 5; i <= currentPage + 4; ++i) {
                     if (currentPage == i) {
-                        pageHTML += `<li class="page-item active"><a class="page-link" href="post.html?id=${id}&page=${i}&pagesize=${pagesize}">${i}</a></li>`
+                        pageHTML += `<li class="page-item active"><a class="page-link" href="post.html?id=${id}&p=${i}&pagesize=${pagesize}">${i}</a></li>`
                     } else {
-                        pageHTML += `<li class="page-item"><a class="page-link" href="post.html?id=${id}&page=${i}&pagesize=${pagesize}">${i}</a></li>`
+                        pageHTML += `<li class="page-item"><a class="page-link" href="post.html?id=${id}&p=${i}&pagesize=${pagesize}">${i}</a></li>`
                     }
                 }
             }
@@ -357,7 +357,6 @@ function becomeFriends(){
         success: (data) => { 
             if(data.code==200){
                 alert('添加成功！');
-                location.reload();
             }else{
                 alert('你好像已经加过Ta了哦');
             }

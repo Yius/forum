@@ -1,11 +1,11 @@
 let mysql = require('mysql')
 let pool = mysql.createPool({
-    host: '10.252.9.88',
+    host: '127.0.0.1',
     port: '3306',
     user: 'root',
-    password: '123456',
-    database: 'forum'
-    // connectTimeout: 10
+    password: '',
+    database: 'forum',
+    connectTimeout: 10
 })
 
 var URL = require('url');
@@ -267,10 +267,10 @@ server.post('/info/alter',function(req,res){
     let gender = req.body.gender
     let bornyear = req.body.bornyear
     let description = req.body.description
-    if(!password||!nickname||!gender||!bornyear||!description){
-        res.json({code:100})
-        return
-    }
+    // if(!password||!nickname||!gender||!bornyear||!description){
+    //     res.json({code:100})
+    //     return
+    // }
     if(password=="")
         password = req.session.password
     if(nickname=="")
@@ -284,8 +284,64 @@ server.post('/info/alter',function(req,res){
     pool.query(sql,[password,nickname,gender,bornyear,description,id],function(err,result){
         if(err)
             res.json({code:0})
-        else
-            res.json({code:200})
+        else{
+            req.session.password = password
+            req.session.nickname = nickname
+            req.session.gender = gender
+            req.session.bornyear = bornyear
+            req.session.description = description
+            let countLoad = 0
+            let sql1 = 'update friend set onename=? where oneid =?'
+            pool.query(sql1,[nickname,id],function(err,result){
+                if(err) throw err
+                else{
+                    countLoad++
+                    if(countLoad==5){
+                        res.json({code:200})
+                    }
+                }
+            })
+            let sql2 = 'update friend set twoname=? where twoid=?'
+            pool.query(sql2,[nickname,id],function(err,result){
+                if(err) throw err
+                else{
+                    countLoad++
+                    if(countLoad==5){
+                        res.json({code:200})
+                    }
+                }
+            })
+            let sql3= 'update postreply set nickname=? where uid = ?'
+            pool.query(sql3,[nickname,id],function(err,result){
+                if(err)throw err
+                else{
+                    countLoad++
+                    if(countLoad==5){
+                        res.json({code:200})
+                    }
+                }
+            })
+            let sql4 = 'update talkinfo set sendername =? where senderid=?'
+            pool.query(sql4,[nickname,id],function(err,result){
+                if(err) throw err
+                else{
+                    countLoad++
+                    if(countLoad==5){
+                        res.json({code:200})
+                    }
+                }
+            })
+            let sql5 ='update talkinfo set receivername=? where receiverid=?'
+            pool.query(sql5,[nickname,id],function(err,result){
+                if(err) throw err
+                else{
+                    countLoad++
+                    if(countLoad==5){
+                        res.json({code:200})
+                    }
+                }
+            })
+        }
     })
 })
 
@@ -347,7 +403,7 @@ server.post('/register', function (req, res) {
 server.post('/login', function (req, res) {
     let id = req.body.id
     let password = req.body.password
-    console.log(req.sessionID)
+    // console.log(req.sessionID)
     if (!id || !password) {
         res.json({
             code: 100
@@ -372,7 +428,7 @@ server.post('/login', function (req, res) {
                 req.session.gender = result[0].gender
                 req.session.description = result[0].description
                 req.session.avatar = result[0].avatar
-                console.log(req.sessionID)
+                // console.log(req.sessionID)
                 res.json({
                     code: 200,
                     msg: 'login success'
@@ -391,48 +447,50 @@ server.post('/login', function (req, res) {
 /**
  * 8、建立好友关系
  */
-server.get('/friends/add', function (req, res) {
+server.get('/friends/add',function(req,res){
     let oneid = req.session.uid;
     let onename = req.session.nickname
     let oneavatar = req.session.avatar
-    if (!oneid) {
-        res.json({ code: 400, msg: 'no logged in' })
+    if(!oneid){
+        res.json({code:400,msg:'no logged in'})
         return
     }
     let twoid = req.query.twoid
-    if (!twoid) {
-        res.json({ code: 100 })
+    if(!twoid){
+        res.json({code:100})
         return
     }
-    if (oneid == "" || twoid == "") {
-        res.json({ code: 500, msg: 'can not be empty' })
+    if(oneid==""||twoid==""){
+        res.json({code:500,msg:'can not be empty'})
         return
     }
-    if (oneid == twoid) {
-        res.json({ code: 300, msg: 'not add yourself as a friend' });
+    if(oneid==twoid){
+        res.json({code:300,msg:'not add yourself as a friend'});
     }
-    let sql = 'select * from friend where (oneid like ? and twoid like ?) or (oneid like ? and twoid like?);'
-    pool.query(sql, [oneid, twoid, twoid, oneid], function (err, result) {
-        if (err) throw err
-        else {
-            if (result.length > 0) {
-                res.json({ code: 0, msg: 'friend has been added' })
-            } else {
-                let sql = 'select * from user where id = ?'
-                pool.query(sql, [twoid], function (err, result) {
-                    if (err) throw err
-                    else {
-                        if (result.length > 0) {
+    let sql = 'select * from friend where (oneid=? and twoid=?) or (oneid=? and twoid=?)'
+    pool.query(sql,[oneid,twoid,twoid,oneid],function(err,result){
+        if(err)throw err
+        else{
+            if(result.length>0){
+                res.json({code:0,msg:'friend has been added'})
+            }else{
+                let sql = 'select * from user where id = ?'
+                pool.query(sql,[twoid],function(err,result){
+                    if(err)throw err
+                    else{
+                        if(result.length>0){
                             let twoname = result[0].nickname
                             let twoavatar = result[0].avatar
-                            let sql = 'insert into friend values(null,?,?,?,?,?,?)'
-                            pool.query(sql, [oneid, twoid, onename, twoname, oneavatar, twoavatar], function (err, result) {
-                                if (err)
-                                    res.json({ code: 0 })
-                                else {
-                                    res.json({ code: 200 })
+                            let sql = 'insert into friend values(null,?,?,?,?,?,?)'
+                            pool.query(sql,[oneid,twoid,onename,twoname,oneavatar,twoavatar],function(err,result){
+                                if(err)
+                                    res.json({code:0})
+                                else{
+                                    res.json({code:200})
                                 }
                             })
+                        }else{
+                            res.json({code:0})
                         }
                     }
                 })
@@ -480,7 +538,7 @@ server.get('/session/check', function (req, res) {
  * 11、获取帖子列表
  */
 server.get('/posts/list', function (req, res) {
-    console.log(req.sessionID)
+    // console.log(req.sessionID)
     let output = {
         totalPage: {},
         post: {
@@ -508,7 +566,7 @@ server.get('/posts/list', function (req, res) {
         else
             output.totalPage = result[0].num / pagesize
         if (postload) {
-            console.log(output)
+            // console.log(output)
             res.json(output)
         }
     })
@@ -525,7 +583,7 @@ server.get('/posts/list', function (req, res) {
                 var dataString = JSON.stringify(result)
                 var data = JSON.parse(dataString)
                 output.post = data
-                console.log(output)
+                // console.log(output)
                 res.json(output)
             }
         } else {
@@ -544,7 +602,7 @@ server.post("/friends/sendmsg", function (req, res) {
     let rid = req.body.receiverid //接收者id
     let rname = req.body.receivername //接收者name
     let sendtime = req.body.sendtime //发送时间
-    let ravatar = req.body.receiveravata //接收者头像
+    let ravatar = req.body.receiveravatar //接收者头像
     let sid = req.session.uid //发送者id
     let sname = req.session.nickname //发送者name
     let savatar = req.session.avatar //发送者avatar
@@ -657,7 +715,7 @@ server.get('/post/alldetail', function (req, res) {
                         var dataString = JSON.stringify(result[0].num)
                         var data = JSON.parse(dataString)
                         output.post[i].replys = data
-                        console.log("s:", output.post[i].replys)
+                        // console.log("s:", output.post[i].replys)
                     } else {
                         output.post[i].replys = 0
                     }
@@ -720,12 +778,12 @@ server.get('/post/replys', function (req, res) {
     pool.query(sql2, [replygroup], function (err, result) {
         if (err)
             throw err
-        console.log("2")
+        // console.log("2")
         if (result.length > 0) {
             var dataString = JSON.stringify(result)
             var data = JSON.parse(dataString)
             output.post = data
-            console.log(data)
+            // console.log(data)
         } else {
             output.post = {}
         }
@@ -774,7 +832,7 @@ server.get('/posts/search', function (req, res) {
     })
 
     //查询帖子信息output.post
-    let sql2 = 'select id,title,content,publishtime from postreply where title like "%' + keyword + '%" order by publishtime limit ' + limit1 + ',' + pagesize
+    let sql2 = 'select id,title,content,publishtime,avatar from postreply where title like "%' + keyword + '%" order by publishtime desc limit ' + limit1 + ',' + pagesize
     pool.query(sql2, function (err, result) {
         if (err)
             throw err
@@ -785,7 +843,7 @@ server.get('/posts/search', function (req, res) {
                 var dataString = JSON.stringify(result)
                 var data = JSON.parse(dataString)
                 output.post = data
-                console.log(output)
+                // console.log(output)
                 res.json(output)
             }
         } else {
@@ -821,7 +879,7 @@ server.get("/info/peek", function (req, res) {
 })
 
 /**
- * 
+ * API 17、设置头像
  */
 server.post('/upload/img',function(req,res){
     upload(req,res,function(err){
@@ -839,23 +897,83 @@ server.post('/upload/img',function(req,res){
             res.json({code:0})
             return
         }
+        let countLoad=0
         let sql = 'update user set avatar=? where id =?'
         pool.query(sql,[avatar,id],function(err,reuslt){
             if(err){
                 res.json({code:0})
             }else{
+                countLoad++
                 let avatar_p = req.session.avatar
                 req.session.avatar = avatar
                 if(avatar.toLowerCase()!=avatar_p.toLowerCase()){
-                    fs.unlink('../frontEnd/userImg/'+avatar_p,function(err){
-                        if(err){
-                            res.json({code:200,avatar:avatar,msg:'Failed to delete previous picture'})
-                            return false
-                        }else{
+                    if(avatar_p!="default-boy.jpg" && avatar_p!="default-girl.jpg"){
+                        fs.unlink('../frontEnd/userImg/'+avatar_p,function(err){
+                            if(err){
+                                if(countLoad==6)
+                                    res.json({code:200,avatar:avatar,msg:'Failed to delete previous picture'})
+                                return false
+                            }else{
+                                if(countLoad==6)
+                                    res.json({code:200,avatar:avatar})
+                            }
+                        })
+                    }else{
+                        if(countLoad==6)
                             res.json({code:200,avatar:avatar})
-                        }
-                    })
+                    }
                 }else{
+                    if(countLoad==6)
+                    res.json({code:200,avatar:avatar})
+                }
+            }
+        })
+        let sql1 = 'update friend set oneavatar=? where oneid=?'
+        pool.query(sql1,[avatar,id],function(err,result){
+            if(err) throw err
+            else{
+                countLoad++
+                if(countLoad==6){
+                    res.json({code:200,avatar:avatar})
+                }
+            }
+        })
+        let sql2 = 'update friend set twoavatar=? where twoid=?'
+        pool.query(sql2,[avatar,id],function(err,result){
+            if(err)throw err
+            else{
+                countLoad++
+                if(countLoad==6){
+                    res.json({code:200,avatar:avatar})
+                }
+            }
+        })
+        let sql3 = 'update postreply set avatar =? where uid=?'
+        pool.query(sql3,[avatar,id],function(err,result){
+            if(err)throw err
+            else{
+                countLoad++
+                if(countLoad==6){
+                    res.json({code:200,avatar:avatar})
+                }
+            }
+        })
+        let sql4 = 'update talkinfo set senderavatar=? where senderid=?'
+        pool.query(sql4,[avatar,id],function(err,result){
+            if(err) throw err
+            else{
+                countLoad++
+                if(countLoad==6){
+                    res.json({code:200,avatar:avatar})
+                }
+            }
+        })
+        let sql5 ='update talkinfo set receiveravatar=? where receiverid=?'
+        pool.query(sql5,[avatar,id],function(err,result){
+            if(err) throw err
+            else{
+                countLoad++
+                if(countLoad==6){
                     res.json({code:200,avatar:avatar})
                 }
             }

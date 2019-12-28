@@ -142,7 +142,7 @@ function showPosts() {
                     `<div class="media card-body" style="border-bottom: solid gainsboro 1px;">
                         <img class="align-self-start mr-3 indexBox" src="${'userImg/'+postArr[i].avatar}" >
                         <div class="media-body">
-                            <h5 class="mt-0"><a href="post.html?id=${postArr[i].id}&page=1&pagesize=20">${postArr[i].title}</a></h5>
+                            <h5 class="mt-0"><a href="post.html?id=${postArr[i].id}&p=1&pagesize=20">${postArr[i].title}</a></h5>
                             <p>${postArr[i].content}</p>
                             <span style="font-size:10px;float:right;">发贴时间:${transformTime(postArr[i].publishtime)}</span>
                         </div>

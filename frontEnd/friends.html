@@ -19,23 +19,73 @@
     <![endif]-->
 </head>
 
-<body class="background" style="opacity:0.9;" >
+<body class="background" style="opacity:0.9;">
 
   <div id="data" style="display: none;"></div>
+  <div class="container">
+    <nav class="navbar navbar-expand navbar-light" style="margin-top: 2%;background-color: #e3f2fd;">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <div class="list-unstyled card innerbox" style="margin: 4% auto 3% 15%;width: 22%;height: 620px;float: left;" id="friendsList">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="info.html">个人信息</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="posts.html?p=1">贴子列表</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)" onclick="logOut()">退出登录</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </div>
 
-  <div style="width: 50%;height: 620px;float: left;margin-top: 4%;">
-    <div id="talk_div" style="background-color: white; height: 570px;width: 100%;border-bottom:solid gainsboro;border-top: solid gainsboro;border-right: solid gainsboro;border-radius: 5px;overflow-y: scroll;">
+  <div class="list-unstyled card innerbox" style="margin: 1% auto 3% 15%;width: 22%;height: 620px;float: left;"
+    id="friendsList">
+  </div>
+
+  <div style="width: 50%;height: 620px;float: left;margin-top: 1%;">
+    <div id="talk_div"
+      style="background-color: white; height: 570px;width: 100%;border-bottom:solid gainsboro;border-top: solid gainsboro;border-right: solid gainsboro;border-radius: 5px;overflow-y: scroll;">
     </div>
-    <div id="send_div" style="background-color: white;height: 50px; border-bottom: solid gainsboro;border-right:solid gainsboro;border-radius: 5px;">
+    <div id="send_div"
+      style="background-color: white;height: 50px; border-bottom: solid gainsboro;border-right:solid gainsboro;border-radius: 5px;">
+    </div>
   </div>
-</div>
 
 
 </body>
 <script>
-  $(window).on('load',sessionCheck());
+  $(window).on('load', sessionCheck());
 </script>
+<script>
+  //不能将logOut()写在js文件夹内，原因我推测是nav-link在搞鬼
+  function logOut() {
+    var url = globalConfig.url;
+    $.ajax({
+      method: 'GET',
+      xhrFields: {
+        withCredentials: true
+      },
+      url: `http://${url}/user/logout`,
+      success: (data) => {
+        if (data.code == 200) {
+          alert('您已成功退出登录，即将跳转到首页');
+          window.location.href = "index.html";
+        } else {
+          alert('未知原因，退出失败');
+        }
+      },
+      error: (xhr, err) => {
+        alert('退出失败');
+      }
+    })
+  }
+</script>
+
 </html>

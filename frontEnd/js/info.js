@@ -58,6 +58,7 @@ function alterInfo() {
         success: (data) => {
             if(data.code!=200){
                 alert('未知原因，修改失败');
+                alert(data.code);
             }
             $('#info_change').modal('hide');
             location.reload();
@@ -69,6 +70,11 @@ function alterInfo() {
 }
 
 function uploadImg() {
+    var file = $('#change_head')[0].files[0];
+    if(file.size > 1024*1024){
+        alert('图片太大了，重新选择一张吧');
+        return;
+    }
     var url = globalConfig.url;
     var formData = new FormData();
     var href = window.location.href;
@@ -78,7 +84,7 @@ function uploadImg() {
         id = href.substring(href.indexOf('=') + 1);
     }
     formData.append('id',id);
-    formData.append('avatar', $('#change_head')[0].files[0]);
+    formData.append('avatar', file);
     $.ajax({
         method: "POST",
         url: `http://${url}/upload/img`,
@@ -105,6 +111,7 @@ function identityCheck(){
     var ind = href.indexOf('?');
     if (ind != -1) {
         $('#change').attr('style','display:none;');
+        $('#logOut').attr('style','display:none;');
     }
 }
 

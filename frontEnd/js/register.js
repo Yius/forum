@@ -26,7 +26,11 @@ function registerHelp(){
         success: (data) => {
             if (data.code == 200) {
                 window.location.href = "login.html";
-            } else {
+            } else if(data.code==0){
+                alert('账号已注册');
+            }else if(data.code==100){
+                alert('要填写所有信息哦');
+            }else{
                 alert("注册失败");
             }
         },
